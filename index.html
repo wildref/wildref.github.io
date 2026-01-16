@@ -321,14 +321,18 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
 
 <footer>&copy; 2025 WildREF All rights reserved. 501 c3 (EIN:82-4533001)<br>Web design by Frank Hogland</footer>
 
-<script>
+ <script>
 // Hero slideshow
 const slides = document.querySelectorAll('.hero-slide');
 let current = 0;
 function showSlide(i) { slides.forEach((s, idx) => s.classList.toggle('active', idx === i)); }
 function nextSlide() { current = (current + 1) % slides.length; showSlide(current); }
 showSlide(current);
-setInterval(nextSlide, 5000);
+setInterval(nextSlide, 20000);
+
+</script>
+
+<script>
 
 // Mobile dropdown + nav toggle fix
 (function () {
