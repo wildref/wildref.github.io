@@ -51,9 +51,7 @@ For full license, see (https://creativecommons.org/licenses/by-nc/4.0/deed.en).
 &nbsp;
 
 
-<p align="center">
-	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" />
-</p>
+<hr>
 
 <p align="center">
 	Copyright &copy; 2025-present <a href="https://wildref.org" target="_blank">WildREF Org</a>
