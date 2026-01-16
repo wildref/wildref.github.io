@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WildREF</title>
+<meta name="description" content="Wild Ref description">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<link rel="canonical" href="https://wildref.org">
+
+<style>
+* {margin:0; padding:0; box-sizing:border-box;}
+body {font-family: Arial, sans-serif; line-height:1.6; color:#333;}
+
+/* --- NAV --- */
+nav {
+  position: absolute;
+  top:0; left:0; width:100%;
+  background: #fff;
+  box-shadow:0 4px 8px rgba(0,0,0,0.1);
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  padding:0.5rem 1.5rem;
+  z-index:1000;
+  flex-wrap: wrap;
+}
+nav .logo {font-weight:bold; font-size:1.2rem;}
+
+nav ul {
+  list-style:none;
+  display:flex;
+  align-items:center;
+  gap:0.5rem;
+}
+nav ul li {position:relative;}
+nav ul li>p, nav ul li>a {
+  display:block;
+  padding:0.4rem 0.75rem;
+  text-decoration:none;
+  color:#333;
+  font-weight:600;
+  font-size:0.95rem;
+}
+nav ul li ul.dropdown {
+  position:absolute;
+  top:100%; left:0;
+  min-width:180px;
+  background: #fff;
+  display:none;
+  flex-direction:column;
+  padding:10px;
+  z-index:1001;
+  border-radius: 5px;
+  box-shadow:0 8px 8px -1px rgba(0,0,0,0.1);
+}
+nav ul li ul.dropdown li a {
+  padding:0.6rem 1rem;
+  color:#333;
+  font-weight:500;
+  text-align:center;
+  white-space:nowrap;
+}
+nav ul li ul.dropdown li a:hover {background:#f0f0f0; border-radius: 5px;}
+
+nav ul li:hover>ul.dropdown,
+nav ul li>ul.dropdown:hover {display:block;}
+
+/* --- HERO --- */
+.hero {position: relative; height: 100vh; overflow: hidden; color: #fff;}
+.hero-slide {
+  position: absolute; top:0; left:0;
+  width:100%; height:100%;
+  background-size: cover;
+  background-position: center;
+  opacity:0;
+  transition: opacity 1.5s ease-in-out;
+}
+.hero-slide.active {opacity:1; z-index:1;}
+
+.hero{ box-shadow:0 4px 8px rgba(0,0,0,0.1); }
+
+section {padding:4rem 2rem; max-width:1000px; margin:auto;}
+.cta-buttons a {
+  display:inline-block; margin:1rem; padding:0.75rem 1.5rem;
+  background:#4CAF50; color:#fff; text-decoration:none; border-radius:4px; font-weight:bold;
+}
+footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
+
+.gallery-menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+.menu-card {
+  width: 260px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.menu-card img {height: 130px; margin: 1rem 0; border-radius: 5px; object-fit: contain;}
+.menu-card h2 {font-size:1.25rem; margin:0.25rem 0;}
+.menu-card p {font-size:0.9rem; color:#555; text-align:center; padding:0 0.5rem;margin-bottom: 10px;}
+
+/* ---------- MOBILE NAV UPDATED ---------- */
+@media only screen and (max-width: 768px) {
+  nav {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1rem;
+    position: relative;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  .nav-search { display: none; }
+
+  #hamburger {
+    margin-left: auto;
+  }
+
+  nav ul {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+  }
+
+  nav ul li {width: 100%;}
+
+  nav ul li > a, nav ul li > p {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    display: block;
+  }
+
+  nav ul li ul.dropdown {
+    display: none;
+    flex-direction: column;
+    background: #fafafa;
+    border-top: 1px solid #eee;
+    position: static;
+    padding: 0;
+  }
+
+  nav ul li.open > ul.dropdown,
+  nav ul li > ul.dropdown.open {
+    display: flex;
+  }
+
+  nav ul li ul.dropdown li a {
+    padding-left: 1.5rem;
+    background: #fafafa;
+  }
+
+  nav ul li ul.dropdown li a:hover {
+    background: #f0f0f0;
+  }
+
+  .gallery-menu {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 1.5rem;
+  }
+  .menu-card {width:90%; max-width:350px; height:auto; padding:1rem;}
+  .menu-card img {width:200px;margin:0.75rem 0; border-radius: 5px !important;}
+}
+
+@media (max-width: 768px) {
+  nav ul li > ul.dropdown {
+    display: flex !important;
+    flex-direction: column;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.2s ease;
+    background: #fafafa;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    border-radius: 5px;
+  }
+
+  nav ul li > ul.dropdown.open {
+    max-height: 400px;
+    opacity: 1;
+  }
+
+  nav ul li:hover > ul.dropdown {
+    display: flex !important;
+  }
+}
+
+/* === Hamburger on RIGHT === */
+@media (max-width: 768px) {
+  .hamburger {
+    position: relative;
+    width: 36px;
+    height: 28px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+  }
+
+  .hamburger span {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background: #333;
+    border-radius: 2px;
+    transition: transform 0.28s cubic-bezier(.2,.9,.3,1), opacity 0.18s linear;
+    will-change: transform, opacity;
+  }
+
+  .hamburger span:nth-child(1) { top: 4px; }
+  .hamburger span:nth-child(2) { top: 50%; transform: translateX(-50%) translateY(-50%); }
+  .hamburger span:nth-child(3) { bottom: 4px; }
+
+  .hamburger.active span:nth-child(1) {
+    transform: translateX(-50%) translateY(8px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-50%);
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateX(-50%) translateY(-8px) rotate(-45deg);
+  }
+
+  #nav-menu { display: none; flex-direction: column; text-align: center; }
+  #nav-menu.open { display: flex; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">WildREF</div>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <ul id="nav-menu">
+    <li><p>About</p>
+      <ul class="dropdown">
+        <li><a href="#">Mission</a></li>
+        <li><a href="#">Team</a></li>
+      </ul>
+    </li>
+    <li><p>Research</p>
+      <ul class="dropdown">
+        <li><a href="#">Bees</a></li>
+        <li><a href="#">Bears</a></li>
+      </ul>
+    </li>
+    <li><p>Education</p>
+      <ul class="dropdown">
+        <li><a href="#TMP">The Melissodes Project</a></li>
+        <li><a href="#">Data Rich Curricula</a></li>
+      </ul>
+    </li>
+    <li><p>Spotlight</p>
+      <ul class="dropdown">
+        <li><a href="#">Illegal Wild <br>Life Trade</a></li>
+        <li><a href="#">Hurricane Helene <br>in North Carolina</a></li>
+        <li><a href="#">Bats</a></li>
+        <li><a href="#">Mussels</a></li>
+        <li><a href="#">Researcher of the Month</a></li>
+      </ul>
+    </li>
+    <li><p>Cub facility</p></li>
+    <li><p>Donate</p></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="index.html">Home</a></li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <div class="hero-slide" style="background-image:url('img/hero1.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/hero2.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/hero3.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/hero4.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/hero5.JPG');"></div>
+</header>
+
+<main>
+  <div class="gallery-menu">
+    <a href="Temp-page.html" class="menu-card">
+      <img src="img/research.JPG" alt="Figures Icon"/>
+      <h2>Black Bear Research</h2>
+      <p>Demography, space use, bear interactions, and denning ecology</p>
+    </a>
+
+    <a href="https://themelissodesproject.wildref.org/index.html" class="menu-card" id="TMP">
+      <img src="img/hero4.JPG" alt="Diagrams Icon"/>
+      <h2>The Melissodes Project</h2>
+      <p>Online resource dedicated to the genus of bee <i>Melissodes</i></p>
+    </a>
+
+    <a href="Temp-page.html" class="menu-card">
+      <img src="img/hero3.JPG" alt="Images Icon"/>
+      <h2>Education</h2>
+      <p>Science based open source education</p>
+    </a>
+  </div>
+</main>
+
+<footer>&copy; 2025 WildREF All rights reserved. 501 c3 (EIN:82-4533001)<br>Web design by Frank Hogland</footer>
+
+<script>
+// Hero slideshow
+const slides = document.querySelectorAll('.hero-slide');
+let current = 0;
+function showSlide(i) { slides.forEach((s, idx) => s.classList.toggle('active', idx === i)); }
+function nextSlide() { current = (current + 1) % slides.length; showSlide(current); }
+showSlide(current);
+setInterval(nextSlide, 5000);
+
+// Mobile dropdown + nav toggle fix
+(function () {
+  const mq = () => window.innerWidth <= 768;
+  const navMenu = document.getElementById('nav-menu');
+  if (!navMenu) return;
+
+  const triggers = navMenu.querySelectorAll(':scope > li > p, :scope > li > a');
+
+  function closeAllExcept(exceptDropdown) {
+    navMenu.querySelectorAll(':scope > li.open').forEach(li => {
+      const ul = li.querySelector(':scope > ul.dropdown');
+      if (ul && ul !== exceptDropdown) {
+        li.classList.remove('open');
+        ul.classList.remove('open');
+      }
+    });
+  }
+
+  triggers.forEach(trigger => {
+    trigger.addEventListener('click', function (e) {
+      if (!mq()) return;
+      const parentLi = trigger.parentElement;
+      const dropdown = parentLi.querySelector(':scope > ul.dropdown');
+      if (!dropdown) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      const isOpen = parentLi.classList.contains('open');
+      if (isOpen) {
+        parentLi.classList.remove('open');
+        dropdown.classList.remove('open');
+      } else {
+        closeAllExcept(dropdown);
+        parentLi.classList.add('open');
+        dropdown.classList.add('open');
+      }
+    }, { passive: false });
+  });
+
+  navMenu.querySelectorAll(':scope > li > ul.dropdown').forEach(ul => {
+    ul.addEventListener('click', e => e.stopPropagation());
+  });
+
+  document.addEventListener('click', function () {
+    if (!mq()) return;
+    closeAllExcept(null);
+  });
+
+  window.addEventListener('resize', () => {
+    if (!mq()) {
+      navMenu.querySelectorAll(':scope > li.open').forEach(li => li.classList.remove('open'));
+      navMenu.querySelectorAll(':scope > li > ul.dropdown.open').forEach(ul => ul.classList.remove('open'));
+      document.getElementById('hamburger')?.classList.remove('active');
+      navMenu.classList.remove('open');
+    }
+  });
+})();
+
+// Hamburger toggle
+const hamburger = document.getElementById('hamburger');
+const navMenu = document.getElementById('nav-menu');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  navMenu.classList.toggle('open');
+});
+hamburger.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    hamburger.click();
+  }
+});
+</script>
+
+</body>
+</html>
