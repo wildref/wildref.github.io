@@ -29,7 +29,7 @@
 <p align="center">
 Join the cause!
 </p>
-
+<hr>
 
 
 &nbsp;
