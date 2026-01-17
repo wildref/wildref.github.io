@@ -304,7 +304,33 @@ nav {
   #nav-menu.open { display: flex; }
 }
 
+.photo-credit {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  color: #fff;
+  padding: 5px 12px;
+  font-size: 0.5rem;
+  border-radius: 4px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none; /* Prevents text from interfering with clicks */
+}
 
+/* Show credit only when the slide is active */
+.hero-slide.active .photo-credit {
+  opacity: 1;
+}
+
+/* Mobile style (Centered) */
+@media only screen and (max-width: 767px) {
+  .photo-credit {
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 15px;
+    white-space: nowrap;
+  }
+}
 </style>
 </head>
 <body>
@@ -354,15 +380,13 @@ nav {
     <li><a href="index.html">Home</a></li>
   </ul>
 </nav>
-
 <header class="hero">
-  <div class="hero-slide" style="background-image:url('img/1hero.JPG');"></div>
-  <div class="hero-slide" style="background-image:url('img/2hero.JPG');"></div>
-  <div class="hero-slide" style="background-image:url('img/3hero.webp');"></div>
-  <div class="hero-slide" style="background-image:url('img/4hero.webp');"></div>
-  <div class="hero-slide" style="background-image:url('img/5hero.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/1hero.JPG');"><span class="photo-credit">Photo by Doug Emlen</span></div>
+  <div class="hero-slide" style="background-image:url('img/2hero.JPG');"><span class="photo-credit">Photo by Frank Hogland</span></div>
+  <div class="hero-slide" style="background-image:url('img/3hero.webp');"><span class="photo-credit">Photo by Melissa Reynolds-Hogland</span></div>
+  <div class="hero-slide" style="background-image:url('img/4hero.webp');"><span class="photo-credit">Photo by Melissa Reynolds-Hogland</span></div>
+  <div class="hero-slide" style="background-image:url('img/5hero.JPG');"><span class="photo-credit">Photo by Frank Hogland</span></div>
 </header>
-
 <main>
   <div class="gallery-menu">
     <a href="Temp-page.html" class="menu-card">
