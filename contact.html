@@ -15,7 +15,7 @@ nav {
   display:flex;
   align-items:center;
   justify-content: space-between;
-  padding:0.5rem 1.5rem;
+  padding:1rem 1.5rem;
   z-index:1000;
   flex-wrap: wrap;
   width: 95%;
@@ -28,7 +28,9 @@ nav {
   border-radius: 5px;
 }
 nav .logo {font-weight:bold; font-size:1.2rem;}
-
+main{
+margin-top: 5vh;
+}
 nav ul {
   list-style:none;
   display:flex;
@@ -161,6 +163,10 @@ nav {
   nav ul li:hover > ul.dropdown {
     display: flex !important;
   }
+
+  main{
+    margin-top: 0;
+  }
 }
 
 /* === Hamburger on RIGHT === */
@@ -220,32 +226,35 @@ nav {
 
 <nav>
   <div class="logo">WildREF</div>
-  <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+<div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
 
   <ul id="nav-menu">
-    <li><p>About</p>
+    <li><p class="nav-option">About</p>
       <ul class="dropdown">
         <li><a href="#">Mission</a></li>
-        <li><a href="#">Team</a></li>
+        <li><a href="#">Board</a></li>
+        <li><a href="#">Advisors</a></li>
+        <li><a href="#">Staff</a></li>
       </ul>
     </li>
-    <li><p>Research</p>
+    <li><p class="nav-option">Research</p>
       <ul class="dropdown">
+        <li><a href="#">Black Bears</a></li>
         <li><a href="#">Bees</a></li>
-        <li><a href="#">Bears</a></li>
+        <li><a href="#">Marmots</a></li>
       </ul>
     </li>
-    <li><p>Education</p>
+    <li><p class="nav-option">Education</p>
       <ul class="dropdown">
         <li><a href="#TMP">The Melissodes Project</a></li>
-        <li><a href="#">Data Rich Curricula</a></li>
+        <li><a href="#">Data-rich Curricula</a></li>
       </ul>
     </li>
-    <li><p>Spotlight</p>
+    <li><p class="nav-option">Spotlight</p>
       <ul class="dropdown">
         <li><a href="#">Illegal Wild <br>Life Trade</a></li>
         <li><a href="#">Hurricane Helene <br>in North Carolina</a></li>
@@ -254,8 +263,8 @@ nav {
         <li><a href="#">Researcher of the Month</a></li>
       </ul>
     </li>
-    <li><p>Cub facility</p></li>
-    <li><p>Donate</p></li>
+    <li><a href="#"">Bear Rehab</a></li>
+    <li><p class="nav-option">Donate</p></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="index.html">Home</a></li>
   </ul>
