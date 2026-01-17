@@ -356,11 +356,11 @@ nav {
 </nav>
 
 <header class="hero">
-  <div class="hero-slide" style="background-image:url('img/1hero.webp');"></div>
-  <div class="hero-slide" style="background-image:url('img/hero2.JPG');"></div>
-  <div class="hero-slide" style="background-image:url('img/hero3_2.JPG');"></div>
-  <div class="hero-slide" style="background-image:url('img/hero4.JPG');"></div>
-  <div class="hero-slide" style="background-image:url('img/hero5.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/1hero.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/2hero.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/3hero.webp');"></div>
+  <div class="hero-slide" style="background-image:url('img/4hero.webp');"></div>
+  <div class="hero-slide" style="background-image:url('img/5hero.JPG');"></div>
 </header>
 
 <main>
@@ -372,13 +372,13 @@ nav {
     </a>
 
     <a href="https://themelissodesproject.wildref.org/index.html" class="menu-card" id="TMP">
-      <img src="img/hero4.JPG" alt="Diagrams Icon"/>
+      <img src="img/5hero.JPG" alt="Diagrams Icon"/>
       <h2>The Melissodes Project</h2>
       <p>Online resource dedicated to the genus of bee <i>Melissodes</i></p>
     </a>
 
     <a href="Temp-page.html" class="menu-card">
-      <img src="img/hero3_2.JPG" alt="Images Icon"/>
+      <img src="img/3hero.webp" alt="Images Icon"/>
       <h2>Education</h2>
       <p>Science based open source education</p>
     </a>
@@ -394,7 +394,7 @@ let current = 0;
 function showSlide(i) { slides.forEach((s, idx) => s.classList.toggle('active', idx === i)); }
 function nextSlide() { current = (current + 1) % slides.length; showSlide(current); }
 showSlide(current);
-setInterval(nextSlide, 20000);
+setInterval(nextSlide, 5000);
 
 </script>
 
