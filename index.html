@@ -17,8 +17,6 @@ body {font-family: Arial, sans-serif; line-height:1.6; color:#333;}
 
 /* --- NAV --- */
 nav {
-  position: absolute;
-  top:0; left:0; width:100%;
   background: #fff;
   box-shadow:0 4px 8px rgba(0,0,0,0.1);
   display:flex;
@@ -27,6 +25,14 @@ nav {
   padding:0.5rem 1.5rem;
   z-index:1000;
   flex-wrap: wrap;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;    /* This is the key change */
+  top: 1%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
 }
 nav .logo {font-weight:bold; font-size:1.2rem;}
 
@@ -70,7 +76,7 @@ nav ul li:hover>ul.dropdown,
 nav ul li>ul.dropdown:hover {display:block;}
 
 /* --- HERO --- */
-.hero {position: relative; height: 100vh; overflow: hidden; color: #fff;}
+.hero {position: relative; top:0;height: 100vh; overflow: hidden; color: #fff;}
 .hero-slide {
   position: absolute; top:0; left:0;
   width:100%; height:100%;
@@ -116,16 +122,19 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
 .menu-card p {font-size:0.9rem; color:#555; text-align:center; padding:0 0.5rem;margin-bottom: 10px;}
 
 /* ---------- MOBILE NAV UPDATED ---------- */
-@media only screen and (max-width: 768px) {
-  nav {
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1rem;
-    position: relative;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  }
-  .nav-search { display: none; }
+@media only screen and (max-width: 815px) {
+nav {
+  position: relative;         /* Back to normal stacking */
+  left: auto;                 /* Reset desktop 50% */
+  transform: none;            /* Reset desktop centering transform */
+  width: 100%;                /* Full width on mobile */
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: #fff;           /* Solid white, no transparency */
+  box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
 
   #hamburger {
     margin-left: auto;
@@ -183,7 +192,7 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 815px) {
   nav ul li > ul.dropdown {
     display: flex !important;
     flex-direction: column;
@@ -207,7 +216,7 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
 }
 
 /* === Hamburger on RIGHT === */
-@media (max-width: 768px) {
+@media (max-width: 815px) {
   .hamburger {
     position: relative;
     width: 44px;
