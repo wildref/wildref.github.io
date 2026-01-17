@@ -210,38 +210,48 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
 @media (max-width: 768px) {
   .hamburger {
     position: relative;
-    width: 36px;
-    height: 28px;
+    width: 44px;
+    height: 44px;
     cursor: pointer;
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-left: auto;
   }
 
+  /* Thin dots */
   .hamburger span {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 3px;
+    position: absolute; /* Stack them all in the center first */
+    width: 4px;
+    height: 4px;
     background: #333;
-    border-radius: 2px;
-    transition: transform 0.28s cubic-bezier(.2,.9,.3,1), opacity 0.18s linear;
-    will-change: transform, opacity;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .hamburger span:nth-child(1) { top: 4px; }
-  .hamburger span:nth-child(2) { top: 50%; transform: translateX(-50%) translateY(-50%); }
-  .hamburger span:nth-child(3) { bottom: 4px; }
+  /* Offset dots horizontally from the center */
+  .hamburger span:nth-child(1) { transform: translateX(-8px); }
+  .hamburger span:nth-child(2) { transform: translateX(0); }
+  .hamburger span:nth-child(3) { transform: translateX(8px); }
+
+  /* Morph into a thin 'X' exactly in the center */
+  .hamburger.active span {
+    width: 22px;
+    height: 2px;
+    border-radius: 2px;
+  }
 
   .hamburger.active span:nth-child(1) {
-    transform: translateX(-50%) translateY(8px) rotate(45deg);
+    transform: rotate(45deg);
   }
+
   .hamburger.active span:nth-child(2) {
     opacity: 0;
-    transform: translateX(-50%) translateY(-50%);
+    transform: translateX(0);
   }
+
   .hamburger.active span:nth-child(3) {
-    transform: translateX(-50%) translateY(-8px) rotate(-45deg);
+    transform: rotate(-45deg);
   }
 
   #nav-menu { display: none; flex-direction: column; text-align: center; }
@@ -253,11 +263,11 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
 
 <nav>
   <div class="logo">WildREF</div>
-  <div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+<div class="hamburger" id="hamburger" aria-label="Toggle menu" role="button" tabindex="0">
+  <span class="dot"></span>
+  <span class="dot"></span>
+  <span class="dot"></span>
+</div>
 
   <ul id="nav-menu">
     <li><p class="nav-option">About</p>
@@ -295,7 +305,7 @@ footer {background:#222; color:#eee; text-align:center; padding:2rem 1rem;}
 </nav>
 
 <header class="hero">
-  <div class="hero-slide" style="background-image:url('img/hero1.JPG');"></div>
+  <div class="hero-slide" style="background-image:url('img/hero1_3.JPG');"></div>
   <div class="hero-slide" style="background-image:url('img/hero2.JPG');"></div>
   <div class="hero-slide" style="background-image:url('img/hero3_2.JPG');"></div>
   <div class="hero-slide" style="background-image:url('img/hero4.JPG');"></div>
