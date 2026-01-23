@@ -426,7 +426,7 @@ let current = 0;
 function showSlide(i) { slides.forEach((s, idx) => s.classList.toggle('active', idx === i)); }
 function nextSlide() { current = (current + 1) % slides.length; showSlide(current); }
 showSlide(current);
-setInterval(nextSlide, 10000);
+setInterval(nextSlide, 5000);
 
 </script>
 
