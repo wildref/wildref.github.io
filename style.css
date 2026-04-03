@@ -1360,7 +1360,7 @@ body.dark-mode .menu-btn,
 body.dark-mode .home-btn,
 body.dark-mode .settings-item, 
 body.dark-mode .dropdown-menu{ 
-    color: black; 
+    color: black !important; 
 }
 body.dark-mode .hamburger span { background: black; }
 
@@ -1370,7 +1370,7 @@ body.dark-mode.low-perf .settings-item,
 body.dark-mode.low-perf .dropdown-item,
 body.dark-mode.low-perf .dropdown-item-link,
 body.dark-mode.low-perf .sub-menu-portal::before { 
-    color: white; 
+    color: white !important; 
 }
 body.dark-mode.low-perf .hamburger span { background: white; }
 
@@ -1403,13 +1403,56 @@ body.dark-mode.low-perf .menu-btn,
 body.dark-mode.low-perf .home-btn,
 body.dark-mode.low-perf .dropdown-menu,
 body.dark-mode.low-perf .sub-menu-portal::before,
-body.dark-mode.low-perf .sub-menu-portal{
+body.dark-mode.low-perf .sub-menu-portal,
+body.dark-mode.low-pref .mob-hamburger::before,
+body.dark-mode.low-pref .mob-nav-drawer{
     background: #21262d !important;
     color: white !important;
     border: 1px solid #30363d !important;
+    box-shadow: none !important;
+}
+
+body.dark-mode.low-perf #mobToggle,
+
+body.dark-mode.low-perf .mob-sub-list,
+body.dark-mode.low-perf #mobDrawer {
+    background: #21262d !important;
+    border: 1px solid #30363d !important;
+    box-shadow: none !important;
+}
+
+body.dark-mode.low-perf #mobToggle {
+    color: white;
+}
+body.dark-mode.low-pref .mob-sub-item a, 
+body.dark-mode.low-pref .mob-sub-item a:visited{
+    color: white !important;
+}
+
+
+body.dark-mode.low-perf .mob-sub-list {
+    border: none !important;
+}
+
+body.dark-mode.low-perf .mob-icon span{
+    background: white;
+}
+
+body.dark-mode.low-perf .mob-nav-item{
+background: #21262d !important;
+    color: white !important;
+    border: none !important;
+}
+
+body.dark-mode.low-perf .mob-hamburger::before{
+    background:none;
 }
 
 body.dark-mode.low-perf .sub-item a{
+    color: white !important;
+}
+
+body.dark-mode.low-perf .mob-sub-item a{
     color: white !important;
 }
 
@@ -1434,7 +1477,7 @@ body.dark-mode .contact-form textarea {
    ========================================= */
 @media (max-width: 600px) {
     header {
-        justify-content: space-between;
+        justify-content: center !important;
         left: 0;
         right: 0;
         flex-direction: row;
@@ -1442,4 +1485,61 @@ body.dark-mode .contact-form textarea {
         padding: 0 15px;
         width: 100%;
     }
+}
+
+
+
+body.low-perf .menu-btn,
+body.low-perf .home-btn,
+body.low-perf .dropdown-menu,
+body.low-perf .sub-menu-portal::before,
+body.low-perf .sub-menu-portal,
+body.low-pref .mob-hamburger::before,
+body.low-pref .mob-nav-drawer{
+    background: #ffffff !important;
+    color: rgb(0, 0, 0) !important;
+    box-shadow: none !important;
+}
+
+body.low-perf #mobToggle,
+
+body.low-perf .mob-sub-list,
+body.low-perf #mobDrawer {
+    background: #ffffff !important;
+    box-shadow: none !important;
+}
+
+body.low-perf #mobToggle {
+    color: rgb(0, 0, 0);
+}
+body.low-pref .mob-sub-item a, 
+body.low-pref .mob-sub-item a:visited{
+    color: rgb(0, 0, 0) !important;
+}
+
+
+body.low-perf .mob-sub-list {
+    border: none !important;
+}
+
+body.low-perf .mob-icon span{
+    background: rgb(0, 0, 0);
+}
+
+body.low-perf .mob-nav-item{
+background: #ffffff !important;
+    color: rgb(0, 0, 0) !important;
+    border: none !important;
+}
+
+body.low-perf .mob-hamburger::before{
+    background:none;
+}
+
+body.low-perf .sub-item a{
+    color: rgb(0, 0, 0) !important;
+}
+
+body.low-perf .mob-sub-item a{
+    color: rgb(0, 0, 0) !important;
 }
