@@ -926,10 +926,10 @@ hr { display: none; }
             .card-num { font-size: 14px; margin-bottom: 5px; color: white; }
             .card-btn { padding: 6px 15px; font-size: 11px; }
 
-            .card-research { background-image: url('img/4hero.webp'); }
-            .card-education { background-image: url('img/3hero.webp'); }
+            .card-research { background-image: url('img/research.JPG'); }
+            .card-education { background-image: url('img/jarod_profile.jpg'); }
             .card-melissodes { background-image: url('img/2hero.JPG'); }
-            .card-rehab { background-image: url('img/1hero.JPG'); }
+            .card-rehab { background-image: url('img/Cyan\ March\ 24_mjrh.jpg'); }
         }
 
         @media (max-width: 350px) {
