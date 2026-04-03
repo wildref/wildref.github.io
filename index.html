@@ -112,29 +112,27 @@ a{
     <div class="app-container">
         <div class="hero-container">
         
-            <header>
-
-                <div class="nav-wrapper" style="display: flex; gap: 10px;">
+            <header style="justify-content: space-between; width: 100%;">
+    <div class="nav-wrapper" style="display: flex; gap: 10px;">
+        <div class="mob-hamburger" id="mobToggle" aria-label="Toggle menu">
+            Menu
+            <div class="mob-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="mob-nav-drawer" id="mobDrawer"></div>
         
-                <div class="mob-hamburger" id="mobToggle" aria-label="Toggle menu">
-                    Menu
-                    <div class="mob-icon">
-                        <span></span>
-                        <span></span>
-                    </div>
+        <div class="nav-wrapper">
+            <button class="menu-btn" id="menuToggle">
+                Menu
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
                 </div>
-                <div class="mob-nav-drawer" id="mobDrawer"></div>
-                <div class="nav-wrapper">
-                    <button class="menu-btn" id="menuToggle">
-                        Menu
-                        <div class="hamburger">
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </button>
+            </button>
 
-
-                    <div class="dropdown-menu" id="mainDropdown">
+             <div class="dropdown-menu" id="mainDropdown">
                         <div class="dropdown-item">
                             About
                             <div class="sub-menu">
@@ -172,18 +170,45 @@ a{
                         </div>
                         <a href="#" class="dropdown-item-2">
                         <div class="dropdown-item-link" style="display: block;">
-                          <span style="text-decoration: none !important; color: black;">Donate</span>
+                          <span>Donate</span>
                         </div></a>
 
                     </div>
-                </div>
-                <a href="index.html" class="home-btn" title="Home">
+        
+        <a href="index.html" class="home-btn" title="Home">
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
             </svg>
         </a>
-            </header>
+    </div>
+
+    <div class="settings-wrapper">
+        <button class="home-btn" id="settingsToggle" title="Settings">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+        </button>
+        
+        <div class="dropdown-menu settings-dropdown" id="settingsDropdown">
+            <div class="settings-item">
+                <span>Dark Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="settings-item">
+                <span>Low Performance</span>
+                <label class="switch">
+                    <input type="checkbox" id="lowPerfToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+</header>
 
             <section class="hero-section">
                 <div class="hero-slide" style="background-image:url('img/1hero.JPG');"><span class="photo-credit">Photo by Doug Emlen</span></div>
@@ -322,244 +347,256 @@ a{
         </footer>
     </div>
 
-    <script>
+   <script>
+    // --- Existing Menu Logic ---
+    const menuToggle = document.getElementById('menuToggle');
+    const dropdown = document.getElementById('mainDropdown');
 
-        const menuToggle = document.getElementById('menuToggle');
-const dropdown = document.getElementById('mainDropdown');
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        dropdown.classList.toggle('active');
+    });
 
-// Add the click listener to open the menu
-menuToggle.addEventListener('click', () => {
-    menuToggle.classList.toggle('active');
-    dropdown.classList.toggle('active');
-});
+    // --- Hero Slider Logic ---
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-pagination .dot');
+    let current = 0;
+    let slideInterval;
 
-       const slides = document.querySelectorAll('.hero-slide');
-const dots = document.querySelectorAll('.hero-pagination .dot');
-let current = 0;
-let slideInterval;
+    function showSlide(i) {
+        slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
+        dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+        current = i;
+    }
 
-function showSlide(i) {
-    // Update Slides
-    slides.forEach((s, idx) => s.classList.toggle('active', idx === i));
-    
-    // Update Dots
-    dots.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
-    
-    current = i;
-}
+    function nextSlide() {
+        let next = (current + 1) % slides.length;
+        showSlide(next);
+    }
 
-function nextSlide() {
-    let next = (current + 1) % slides.length;
-    showSlide(next);
-}
+    function jumpToSlide(i) {
+        showSlide(i);
+        resetTimer();
+    }
 
-// Function to allow manual clicking
-function jumpToSlide(i) {
-    showSlide(i);
-    resetTimer(); // Restart the 5s clock so it doesn't flip immediately after clicking
-}
+    function resetTimer() {
+        clearInterval(slideInterval);
+        slideInterval = setInterval(nextSlide, 5000);
+    }
 
-function resetTimer() {
-    clearInterval(slideInterval);
-    slideInterval = setInterval(nextSlide, 5000);
-}
+    showSlide(current);
+    resetTimer();
 
-// Initial Start
-showSlide(current);
-resetTimer();
+    // --- Sub-menu Portal Logic ---
+    const portals = new Map();
+    const hideTimers = new Map();
+    const GAP_DELAY = 130;
 
+    function cancelHide(portal) {
+        if (hideTimers.has(portal)) {
+            clearTimeout(hideTimers.get(portal));
+            hideTimers.delete(portal);
+        }
+    }
 
-        const portals = new Map();
-        const hideTimers = new Map();
-        const GAP_DELAY = 130;
+    function scheduleHide(portal) {
+        cancelHide(portal);
+        hideTimers.set(portal, setTimeout(() => {
+            portal.classList.remove('visible');
+            hideTimers.delete(portal);
+        }, GAP_DELAY));
+    }
 
-        function cancelHide(portal) {
-            if (hideTimers.has(portal)) {
-                clearTimeout(hideTimers.get(portal));
-                hideTimers.delete(portal);
-            }
+    function hideAllPortals() {
+        portals.forEach(p => { cancelHide(p); p.classList.remove('visible'); });
+    }
+
+    let activeMobileItem = null;
+
+    document.querySelectorAll('.dropdown-item, .dropdown-item-2').forEach(item => {
+        const srcMenu = item.querySelector('.sub-menu');
+        if (!srcMenu) return;
+
+        const portal = document.createElement('div');
+        portal.className = 'sub-menu-portal';
+        portal.innerHTML = srcMenu.innerHTML;
+        document.body.appendChild(portal);
+        portals.set(item, portal);
+
+        function positionPortal() {
+            const r = item.getBoundingClientRect();
+            const vw = window.innerWidth;
+            const vh = window.innerHeight;
+            const gap = 10;
+            const pw = portal.offsetWidth || 190;
+            const ph = portal.offsetHeight || 130;
+
+            let left = r.right + gap;
+            if (left + pw > vw - 8) left = Math.max(8, r.left - pw - gap);
+
+            let top = r.top;
+            if (top + ph > vh - 8) top = Math.max(8, vh - ph - 8);
+
+            portal.style.left = left + 'px';
+            portal.style.top = top + 'px';
         }
 
-        function scheduleHide(portal) {
+        item.addEventListener('mouseenter', () => {
             cancelHide(portal);
-            hideTimers.set(portal, setTimeout(() => {
+            portals.forEach((p, it) => { if (it !== item) { cancelHide(p); p.classList.remove('visible'); } });
+            if (!dropdown.classList.contains('active')) return;
+            positionPortal();
+            portal.classList.add('visible');
+        });
+
+        item.addEventListener('mouseleave', e => {
+            if (!portal.contains(e.relatedTarget)) scheduleHide(portal);
+        });
+
+        portal.addEventListener('mouseenter', () => cancelHide(portal));
+        portal.addEventListener('mouseleave', e => {
+            if (!item.contains(e.relatedTarget)) scheduleHide(portal);
+        });
+
+        item.addEventListener('touchend', e => {
+            e.preventDefault();
+            if (!dropdown.classList.contains('active')) return;
+            if (activeMobileItem === item && portal.classList.contains('visible')) {
                 portal.classList.remove('visible');
-                hideTimers.delete(portal);
-            }, GAP_DELAY));
-        }
-
-        function hideAllPortals() {
-            portals.forEach(p => { cancelHide(p); p.classList.remove('visible'); });
-        }
-
-
-        let activeMobileItem = null;
-
-        document.querySelectorAll('.dropdown-item, .dropdown-item-2').forEach(item => {
-            const srcMenu = item.querySelector('.sub-menu');
-            if (!srcMenu) return;
-
-            const portal = document.createElement('div');
-            portal.className = 'sub-menu-portal';
-            portal.innerHTML = srcMenu.innerHTML;
-            document.body.appendChild(portal);
-            portals.set(item, portal);
-
-            function positionPortal() {
-                const r   = item.getBoundingClientRect();
-                const vw  = window.innerWidth;
-                const vh  = window.innerHeight;
-                const gap = 10;
-                const pw  = portal.offsetWidth  || 190;
-                const ph  = portal.offsetHeight || 130;
-
-                let left = r.right + gap;
-                // Flip to left side if it would overflow right edge
-                if (left + pw > vw - 8) {
-                    left = Math.max(8, r.left - pw - gap);
-                }
-
-                let top = r.top;
-                if (top + ph > vh - 8) {
-                    top = Math.max(8, vh - ph - 8);
-                }
-
-                portal.style.left = left + 'px';
-                portal.style.top  = top  + 'px';
-            }
-
-      
-            item.addEventListener('mouseenter', () => {
-                cancelHide(portal);
-                portals.forEach((p, it) => { if (it !== item) { cancelHide(p); p.classList.remove('visible'); } });
-            
-                if (!dropdown.classList.contains('active')) return;
+                activeMobileItem = null;
+            } else {
+                hideAllPortals();
                 positionPortal();
                 portal.classList.add('visible');
-            });
+                activeMobileItem = item;
+            }
+        });
+    });
 
-            item.addEventListener('mouseleave', e => {
-                if (!portal.contains(e.relatedTarget)) scheduleHide(portal);
-            });
+    dropdown.addEventListener('transitionend', () => {
+        if (!dropdown.classList.contains('active')) hideAllPortals();
+    });
 
-            portal.addEventListener('mouseenter', () => cancelHide(portal));
+    // --- Mobile & Settings Logic ---
+    (function () {
+        const mobToggle = document.getElementById('mobToggle');
+        const mobDrawer = document.getElementById('mobDrawer');
+        const desktopMenu = document.getElementById('mainDropdown');
+        const settingsToggle = document.getElementById('settingsToggle');
+        const settingsDropdown = document.getElementById('settingsDropdown');
+        const darkModeInput = document.getElementById('darkModeToggle');
+        const lowPerfInput = document.getElementById('lowPerfToggle');
 
-            portal.addEventListener('mouseleave', e => {
-                if (!item.contains(e.relatedTarget)) scheduleHide(portal);
-            });
+        if (!mobToggle || !mobDrawer || !desktopMenu) return;
 
-        
-            item.addEventListener('touchend', e => {
-                e.preventDefault(); // stop ghost click
-                if (!dropdown.classList.contains('active')) return;
+        // Auto-build mobile nav
+        desktopMenu.querySelectorAll('.dropdown-item, .dropdown-item-2').forEach((item, idx) => {
+            const subItems = item.querySelectorAll('.sub-item');
+            const subId = 'mob-sub-' + idx;
+            let label = subItems.length > 0 ? 
+                Array.from(item.childNodes).filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent.trim()).join('') : 
+                item.textContent.trim();
 
-                if (activeMobileItem === item && portal.classList.contains('visible')) {
-               
-                    portal.classList.remove('visible');
-                    activeMobileItem = null;
-                } else {
-                    hideAllPortals();
-                    positionPortal();
-                    portal.classList.add('visible');
-                    activeMobileItem = item;
-                }
-            });
+            const navItem = document.createElement('div');
+            navItem.className = 'mob-nav-item';
+
+            if (subItems.length > 0) {
+                navItem.dataset.mobSub = subId;
+                navItem.innerHTML = `${label} <span class="mob-chevron">›</span>`;
+                mobDrawer.appendChild(navItem);
+                const subList = document.createElement('div');
+                subList.className = 'mob-sub-list';
+                subList.id = subId;
+                subItems.forEach(si => {
+                    const link = si.querySelector('a');
+                    subList.innerHTML += `<div class="mob-sub-item"><a href="${link ? link.getAttribute('href') : '#'}">${link ? link.textContent : si.textContent}</a></div>`;
+                });
+                mobDrawer.appendChild(subList);
+            } else {
+                const href = (item.closest('a') || item.querySelector('a'))?.getAttribute('href') || '#';
+                navItem.innerHTML = `<a href="${href}" style="color: inherit; display: block; width: 100%;">${label}</a>`;
+                mobDrawer.appendChild(navItem);
+            }
         });
 
-    
-        const _origHide = hideAllPortals;
-        dropdown.addEventListener('transitionend', () => {
-            if (!dropdown.classList.contains('active')) hideAllPortals();
+        // Toggle Mobile Drawer
+        mobToggle.addEventListener('click', () => {
+            if (!mobDrawer.classList.contains('open')) settingsDropdown.classList.remove('active');
+            mobDrawer.classList.toggle('open');
+            mobToggle.classList.toggle('open');
         });
 
-        // ── Mobile Nav: auto-built from #mainDropdown ──
-        (function () {
-            const mobToggle = document.getElementById('mobToggle');
-            const mobDrawer = document.getElementById('mobDrawer');
-            const desktopMenu = document.getElementById('mainDropdown');
-            if (!mobToggle || !mobDrawer || !desktopMenu) return;
+        // 1. Load Saved Preferences from localStorage
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeInput.checked = true;
+        }
 
-            // Updated selector to look for standard items and your custom link classes
-            desktopMenu.querySelectorAll('.dropdown-item, .dropdown-item-2').forEach((item, idx) => {
-                const subItems = item.querySelectorAll('.sub-item');
-                const subId = 'mob-sub-' + idx;
-                
-                // Determine the label: filter text nodes for menus, or just use textContent for direct links
-                let label = "";
-                if (subItems.length > 0) {
-                    label = Array.from(item.childNodes)
-                        .filter(n => n.nodeType === Node.TEXT_NODE)
-                        .map(n => n.textContent.trim())
-                        .join('').trim();
-                } else {
-                    label = item.textContent.trim();
-                }
+        if (localStorage.getItem('performance') === 'low') {
+            document.body.classList.add('low-perf');
+            lowPerfInput.checked = true;
+        }
 
-                const navItem = document.createElement('div');
-                navItem.className = 'mob-nav-item';
+        // 2. Settings Toggle (Exclusive Interaction)
+        settingsToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (!settingsDropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+                menuToggle.classList.remove('active');
+                mobDrawer.classList.remove('open');
+                mobToggle.classList.remove('open');
+            }
+            settingsDropdown.classList.toggle('active');
+        });
 
-                if (subItems.length > 0) {
-                    // Logic for items with accordions (About, Research, etc.)
-                    navItem.dataset.mobSub = subId;
-                    navItem.innerHTML = label + ' <span class="mob-chevron">›</span>';
-                    mobDrawer.appendChild(navItem);
+        // Close settings if main menu opens
+        menuToggle.addEventListener('click', () => {
+            if (dropdown.classList.contains('active')) settingsDropdown.classList.remove('active');
+        });
 
-                    const subList = document.createElement('div');
-                    subList.className = 'mob-sub-list';
-                    subList.id = subId;
+        // Global click to close settings
+        document.addEventListener('click', e => {
+            if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target)) {
+                settingsDropdown.classList.remove('active');
+            }
+        });
 
-                    subItems.forEach(si => {
-                        const link = si.querySelector('a');
-                        const text = link ? link.textContent.trim() : si.textContent.trim();
-                        const href = link ? link.getAttribute('href') : '#';
+        // 3. Toggle Listeners with Saving
+        darkModeInput.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+        });
 
-                        const mobSi = document.createElement('div');
-                        mobSi.className = 'mob-sub-item';
-                        mobSi.innerHTML = `<a href="${href}">${text}</a>`;
-                        subList.appendChild(mobSi);
-                    });
-                    mobDrawer.appendChild(subList);
-                } else {
-                    // Logic for direct links (like Donate)
-                    const parentLink = item.closest('a') || item.querySelector('a');
-                    const href = parentLink ? parentLink.getAttribute('href') : '#';
-                    navItem.innerHTML = `<a href="${href}" style="color: inherit; text-decoration: none; display: block; width: 100%;">${label}</a>`;
-                    mobDrawer.appendChild(navItem);
-                }
-            });
+        lowPerfInput.addEventListener('change', (e) => {
+            if (e.target.checked) {
+                document.body.classList.add('low-perf');
+                localStorage.setItem('performance', 'low');
+            } else {
+                document.body.classList.remove('low-perf');
+                localStorage.setItem('performance', 'high');
+            }
+        });
 
-            // Toggle drawer open/close
-            mobToggle.addEventListener('click', () => {
-                const open = mobDrawer.classList.toggle('open');
-                mobToggle.classList.toggle('open', open);
-            });
-
-            // Close on outside click
-            document.addEventListener('click', e => {
-                if (!mobToggle.contains(e.target) && !mobDrawer.contains(e.target)) {
-                    mobDrawer.classList.remove('open');
-                    mobToggle.classList.remove('open');
-                }
-            });
-
-            // Accordion Logic
-            mobDrawer.addEventListener('click', e => {
-                const navItem = e.target.closest('.mob-nav-item[data-mob-sub]');
-                if (!navItem) return;
-
-                const subId  = navItem.dataset.mobSub;
-                const subEl  = document.getElementById(subId);
-                const isOpen = navItem.classList.contains('open');
-
-                mobDrawer.querySelectorAll('.mob-nav-item').forEach(i => i.classList.remove('open'));
-                mobDrawer.querySelectorAll('.mob-sub-list').forEach(s => s.classList.remove('open'));
-
-                if (!isOpen && subEl) {
-                    navItem.classList.add('open');
-                    subEl.classList.add('open');
-                }
-            });
-        })();
-    </script>
+        // Accordion Logic
+        mobDrawer.addEventListener('click', e => {
+            const navItem = e.target.closest('.mob-nav-item[data-mob-sub]');
+            if (!navItem) return;
+            const subId = navItem.dataset.mobSub;
+            const subEl = document.getElementById(subId);
+            const isOpen = navItem.classList.contains('open');
+            mobDrawer.querySelectorAll('.mob-nav-item').forEach(i => i.classList.remove('open'));
+            mobDrawer.querySelectorAll('.mob-sub-list').forEach(s => s.classList.remove('open'));
+            if (!isOpen && subEl) {
+                navItem.classList.add('open');
+                subEl.classList.add('open');
+            }
+        });
+    })();
+</script>
 </body>
 </html>

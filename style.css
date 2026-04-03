@@ -1274,10 +1274,172 @@ hr { display: none; }
     transform: scale(0.95);
 }
 
-/* Ensure the nav-wrapper aligns them side-by-side */
+/* =========================================
+   HEADER & NAVIGATION LAYOUT
+   ========================================= */
+header {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 10000;
+    width: calc(100% - 40px);
+}
+
 .nav-wrapper {
     display: flex;
     align-items: center;
     gap: 12px;
     position: relative;
+}
+
+/* =========================================
+   SETTINGS DROPDOWN & ITEMS
+   ========================================= */
+.settings-wrapper { 
+    position: relative; 
+}
+
+.settings-dropdown { 
+    right: 0; 
+    left: auto; 
+    padding: 15px; 
+    min-width: 220px; 
+}
+
+.settings-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 5px;
+    color: var(--text-dark);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.dropdown-item-link{
+    color: black;
+}
+
+/* =========================================
+   TOGGLE SWITCH (Cleaned & Sized)
+   ========================================= */
+.switch { position: relative; display: inline-block; width: 34px; height: 18px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider { 
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; 
+    background: #ccc; transition: .3s; border-radius: 20px; 
+}
+
+.slider:before { 
+    position: absolute; content: ""; height: 12px; width: 12px; left: 3px; bottom: 3px; 
+    background: white; transition: .3s; border-radius: 50%; 
+}
+
+input:checked + .slider { background: #27ae60; }
+input:checked + .slider:before { transform: translateX(16px); }
+
+/* =========================================
+   DARK MODE CONFIGURATION
+   ========================================= */
+body.dark-mode {
+    --bg-outer: #0d1117;
+    --bg-inner: #161b22;
+    --accent: #30363d;
+    --text-dark: #f0f6fc;
+    --text-gray: #8b949e;
+    --card-dark: #21262d;
+}
+
+/* Dark Mode UI Adjustments */
+body.dark-mode .menu-btn, 
+body.dark-mode .home-btn,
+body.dark-mode .settings-item, 
+body.dark-mode .dropdown-menu{ 
+    color: black; 
+}
+body.dark-mode .hamburger span { background: black; }
+
+body.dark-mode.low-perf .menu-btn,
+body.dark-mode.low-perf .home-btn,
+body.dark-mode.low-perf .settings-item,
+body.dark-mode.low-perf .dropdown-item,
+body.dark-mode.low-perf .dropdown-item-link,
+body.dark-mode.low-perf .sub-menu-portal::before { 
+    color: white; 
+}
+body.dark-mode.low-perf .hamburger span { background: white; }
+
+/* =========================================
+   LOW PERFORMANCE MODE (Glass/Animation Disable)
+   ========================================= */
+body.low-perf, body.low-perf * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    animation-duration: 0s !important; 
+    transition: none !important;
+}
+
+/* Solid backgrounds for readability */
+body.low-perf .menu-btn, 
+body.low-perf .home-btn, 
+body.low-perf .dropdown-menu,
+body.low-perf .info-bar,
+body.low-perf .sub-menu-portal::before,
+body.low-perf .sub-menu-portal{
+    background: white !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+
+/* =========================================
+   MIXTURE FIX: DARK MODE + LOW PERF
+   ========================================= */
+body.dark-mode.low-perf .menu-btn,
+body.dark-mode.low-perf .home-btn,
+body.dark-mode.low-perf .dropdown-menu,
+body.dark-mode.low-perf .sub-menu-portal::before,
+body.dark-mode.low-perf .sub-menu-portal{
+    background: #21262d !important;
+    color: white !important;
+    border: 1px solid #30363d !important;
+}
+
+body.dark-mode.low-perf .sub-item a{
+    color: white !important;
+}
+
+body.dark-mode.low-perf .dropdown-menu::before,
+body.dark-mode.low-perf .menu-btn::before {
+    background: none !important;
+}
+
+body.dark-mode .card-num{
+color: white;
+}
+
+body.dark-mode .info-bar,
+body.dark-mode .contact-form input, 
+body.dark-mode .contact-form textarea {
+    background: #21262d !important;
+    color: white !important;
+    border: 1px solid #30363d !important;
+}
+/* =========================================
+   MOBILE RESPONSIVENESS
+   ========================================= */
+@media (max-width: 600px) {
+    header {
+        justify-content: space-between;
+        left: 0;
+        right: 0;
+        flex-direction: row;
+        align-items: flex-start;
+        padding: 0 15px;
+        width: 100%;
+    }
 }
