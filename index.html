@@ -328,6 +328,12 @@ body:not(.low-perf) .contact-form-panel.in-view {
     transform: translateY(0);
     transition-delay: 0.12s;
 }
+.hero-slide {
+    will-change: opacity;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
 
 /* ══════════════════════════════════════════════════════
    NEW SCROLL ANIMATIONS ADDED HERE
@@ -402,10 +408,25 @@ body:not(.low-perf) .white-dip-svg.in-view .dip-fill-mid {
 }
 body:not(.low-perf) .white-dip-svg.in-view .dip-fill-back {
     transform: translate(34.55px, 50px);
+
+    
 }
 
 
+
    </style>
+   <link rel="preload" as="image" href="img/1hero.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/2hero.webp">
+<link rel="preload" as="image" href="img/3hero.webp">
+<link rel="preload" as="image" href="img/4hero.webp">
+<link rel="preload" as="image" href="img/5hero.webp">
+<link rel="preload" as="image" href="img/6hero.webp">
+<link rel="preload" as="image" href="img/forest_background.webp">
+<link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="style.css"></noscript>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://formspree.io">
 </head>
 <body>
 
@@ -809,7 +830,8 @@ released back into their wild habitats.</p>
                             <div class="gr2-card-body">
                                 <span class="gr2-date">Wildlife</span>
                                 <h3 class="gr2-card-title">Illegal Wildlife Trade</h3>
-                                <p class="gr2-card-text">Learn about what illegal wildlife trade and the measures put in place to stop it.</p>
+                                <p class="gr2-card-text">Learn about illegal wildlife trade and
+ways to stop it</p>
                                 <button class="gr-link-btn">View page →</button>
                             </div>
                         </div>
@@ -818,7 +840,9 @@ released back into their wild habitats.</p>
                             <div class="gr2-card-body">
                                 <span class="gr2-date">Awards</span>
                                 <h3 class="gr2-card-title">Researcher of the Month</h3>
-                                <p class="gr2-card-text">See who the WildREF researcher of the month is right now and what the researcher of the month award is.</p>
+                                <p class="gr2-card-text">What is the WildREF Researcher
+of the Month Award, and who
+was nominated this month?</p>
                                 <button class="gr-link-btn">View page →</button>
                             </div>
                         </div>
@@ -827,7 +851,10 @@ released back into their wild habitats.</p>
                             <div class="gr2-card-body">
                                 <span class="gr2-date">Research</span>
                                 <h3 class="gr2-card-title">Black Bear Research</h3>
-                                <p class="gr2-card-text">Discover how WildREF contributes to the scientific comunity and knowledge of black bears.</p>
+                                <p class="gr2-card-text">Discover how WildREF contributes
+to the scientific community and
+how research results help conserve
+black bears</p>
                                 <button class="gr-link-btn">View page →</button>
                             </div>
                         </div>
