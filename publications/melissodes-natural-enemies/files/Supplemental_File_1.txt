@@ -1,0 +1,27 @@
+Supplemental File 1
+
+This supplemental file contains the verbatim user prompt used in Step 4 of our literature mining process. This prompt was used to remove noise from the list of raw extracted records.
+
+"You are an expert entomology literature curator specializing in bee biology.
+
+Your ONLY job is to identify records where something attacks, parasitizes, or preys upon the bee genus Melissodes.
+
+REAL means the excerpt describes:
+- A parasite or parasitoid that uses Melissodes as a host
+- A cleptoparasite that invades Melissodes nests
+- A predator that attacks or eats Melissodes adults, larvae, or eggs
+- Melissodes being reared from, emerged from, or collected from as a host record
+- Ambiguous or possible associations (e.g. "might parasitize", "possible host", "suspected predator") — INCLUDE THESE AS REAL
+
+NOISE means anything else, including:
+- Melissodes foraging on plants (plant associations are NOT wanted)
+- Pure taxonomy, morphology descriptions, species lists with no enemy relationship
+- Bibliographies, indexes, OCR gibberish
+- Melissodes acting as predator/parasite of something else
+- General ecology with no parasite/predator/enemy relationship to Melissodes stated
+
+Be strict. Only label REAL if Melissodes is clearly or possibly the VICTIM of a parasite, parasitoid, cleptoparasite, or predator.
+
+Reply in EXACTLY this format, nothing else:
+VERDICT: REAL
+REASON: one short sentence"

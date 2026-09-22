@@ -1,0 +1,1645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Supplementary Material | Melissodes Natural Enemies | WildREF Publication repository</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum: #16181d;
+    --link: #2c3e50;
+    --ink: #111111;
+    --ink-soft: #666666;
+    --rule: #e5eaf0;
+    --panel-blue: #f0f4f9;
+    --footer-grey: #f0f4f9;
+    --bg-page: #ffffff;
+    --bg-surface: #ffffff;
+    --chip-border: #c8c8c8;
+    --figure-bg: #f7f6f2;
+    --figure-border: #c8c3b8;
+    --views-navy: #1c3a5e;
+    --alt-teal: #2fa5a0;
+    --orcid-green: #a6ce39;
+    --oa-amber: #b5730c;
+    --oa-amber-bg: #fbeed9;
+    --serif: 'Merriweather', Georgia, serif;
+    --sans: 'Manrope', Arial, sans-serif;
+    --condensed: 'Manrope', Arial, sans-serif;
+    --max-width: 1280px;
+    --highlight: var(--plum);
+    --glass-bg: rgba(255,255,255,0.10);
+    --glass-bg-strong: rgba(255,255,255,0.16);
+    --glass-border: rgba(255,255,255,0.55);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.65);
+  }
+
+  body.dark-mode {
+    --ink: #f0f6fc;
+    --ink-soft: #8b949e;
+    --rule: #30363d;
+    --panel-blue: #161b22;
+    --footer-grey: #0d1117;
+    --bg-page: #0d1117;
+    --bg-surface: #21262d;
+    --chip-border: #30363d;
+    --figure-bg: #21262d;
+    --figure-border: #30363d;
+    --link: #9db4c9;
+    --highlight: #e8b93f;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg-page);
+    line-height: 1.5;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--highlight); outline-offset: 2px; }
+  svg { display: block; }
+
+  /* ---------- Journal Hero Banner (image + overlay, replaces flat masthead/navbar) ---------- */
+  .journal-hero {
+    position: relative;
+    /* NOTE: no overflow:hidden here on purpose — the menu/settings dropdowns are
+       positioned absolutely and need to be able to escape the hero's box without
+       being clipped. The image + rounded corners are handled by the layer below. */
+  }
+  .journal-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 28px 28px;
+    z-index: 0;
+  }
+  .journal-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 0 0 28px 28px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .journal-hero-topbar {
+    position: relative;
+    /* Higher than .journal-hero-content so open dropdowns are never painted over
+       by the search bar row below, regardless of viewport width. */
+    z-index: 3;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 24px) clamp(16px, 4vw, 32px) 0;
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: flex-start;
+    gap: clamp(10px, 2vw, 16px);
+  }
+  .journal-hero-topbar-left {
+    position: relative; /* anchors both dropdowns to this exact spot */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .journal-hero-topbar-center {
+    justify-self: center;
+    text-align: center;
+    max-width: 100%;
+  }
+  .journal-hero-topbar-right {
+    justify-self: end;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+  .journal-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 28px) clamp(16px, 4vw, 32px) clamp(32px, 6vw, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  .journal-wordmark {
+    color: #fff;
+    font-family: var(--serif);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.3rem, 1rem + 2.2vw, 2.2rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  }
+  .society-block {
+    display: flex; align-items: center; gap: clamp(8px, 1.5vw, 14px);
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-bottom-color: rgba(255,255,255,0.2);
+    border-right-color: rgba(255,255,255,0.2);
+    border-radius: 999px;
+    padding: 6px clamp(12px, 2vw, 20px) 6px 6px;
+    box-shadow: var(--glass-shadow);
+    max-width: 100%;
+  }
+  .society-mark {
+    width: clamp(34px, 4vw, 52px); height: clamp(34px, 4vw, 52px); border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+    border: 2px solid rgba(255,255,255,0.5);
+    flex-shrink: 0;
+  }
+  .society-text {
+    color: #fff;
+    font-family: var(--condensed);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: clamp(0.72rem, 0.6rem + 0.6vw, 1rem);
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+  .society-text small {
+    display: block;
+    font-family: var(--sans);
+    text-transform: none;
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.03em;
+    opacity: 0.8;
+    white-space: normal;
+  }
+
+  /* ---------- Glass menu button + dropdown (copied 1:1 from the WildREF index.html) ---------- */
+  .nav-wrapper { position: relative; }
+  .menu-btn {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.60);
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+    border-right-color: rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 700;
+    color: #000;
+    text-shadow: none;
+    cursor: pointer;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.80),
+      inset 1px 0 0 rgba(255, 255, 255, 0.55);
+    transition: background 0.25s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 20;
+    overflow: hidden;
+  }
+  .menu-btn:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+  .hamburger { display: flex; flex-direction: column; gap: 4px; background: transparent; padding: 4px; border-radius: 50%; }
+  .hamburger span {
+    display: block; width: 14px; height: 2px; background: #000;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .menu-btn.active .hamburger span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+  .menu-btn.active .hamburger span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
+
+  /* Both the main nav dropdown and the settings dropdown are anchored to
+     .journal-hero-topbar-left (position:relative), so they always open from
+     the exact same spot no matter which trigger opened them. */
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-bottom-color: rgba(255,255,255,0.25);
+    border-right-color: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    box-shadow: var(--glass-shadow);
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px);
+    transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1), visibility 0.3s;
+  }
+  .dropdown-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-item-link {
+    padding: 11px 22px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #111;
+    display: block;
+    transition: background 0.2s;
+  }
+  .dropdown-item-link:hover { background: rgba(255,255,255,0.18); text-decoration: none; }
+
+  .nav-search {
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-bottom-color: rgba(255,255,255,0.2);
+    border-right-color: rgba(255,255,255,0.2);
+    border-radius: 999px;
+    overflow: hidden;
+    max-width: 100%;
+    box-shadow: var(--glass-shadow);
+  }
+  .nav-search select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-right: 1px solid rgba(255,255,255,0.25);
+    background: transparent
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")
+      no-repeat right 8px center;
+    background-size: 12px 12px;
+    padding: 8px 24px 8px 10px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 40%;
+    text-overflow: ellipsis;
+  }
+  .nav-search select option { color: #111; background: #fff; }
+  .nav-search input { border: none; padding: 8px 10px; font-size: 0.85rem; width: 160px; max-width: 40vw; background: transparent; color: #fff; }
+  .nav-search input::placeholder { color: rgba(255,255,255,0.6); }
+  .nav-search button {
+    border: none; background: transparent; padding: 0 12px; cursor: pointer;
+    color: rgba(255,255,255,0.85); display: flex; align-items: center;
+  }
+  /* Replace the default black browser focus ring with something that matches the glass UI */
+  .nav-search select:focus,
+  .nav-search input:focus,
+  .nav-search button:focus {
+    outline: none;
+  }
+  .nav-search select:focus-visible,
+  .nav-search input:focus-visible,
+  .nav-search button:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7);
+  }
+
+  /* Larger variant used for the centered search bar at the bottom of the hero */
+  .nav-search-lg { width: 100%; max-width: min(520px, 100%); }
+  .nav-search-lg select { padding: 13px 30px 13px 16px; font-size: 0.92rem; }
+  .nav-search-lg input { padding: 13px 14px; font-size: 1rem; width: clamp(120px, 30vw, 260px); max-width: 55vw; }
+  .nav-search-lg button { padding: 0 18px; }
+  .nav-search-lg button svg { width: 18px; height: 18px; }
+
+  @media (max-width: 860px) {
+    .nav-search select { display: none; }
+  }
+  @media (max-width: 640px) {
+    .journal-hero-topbar { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .journal-hero-topbar-left { justify-content: center; }
+    .journal-hero-topbar-right { justify-self: center; justify-content: center; }
+  }
+  @media (max-width: 400px) {
+    .nav-search-lg input { width: 120px; }
+  }
+
+  /* Home + Settings triggers — ported 1:1 from the WildREF index.html .home-btn */
+  .home-btn {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.60);
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+    border-right-color: rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #000;
+    text-shadow: none;
+    cursor: pointer;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.80),
+      inset 1px 0 0 rgba(255, 255, 255, 0.55);
+    transition: background 0.25s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 300;
+    overflow: hidden;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .home-btn:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); text-decoration: none; }
+  .home-btn:active { transform: scale(0.95); }
+
+  /* Settings dropdown (mirrors .dropdown-menu, holds toggle switches instead of links) */
+  .settings-wrapper { position: relative; }
+  .settings-dropdown { min-width: 220px; padding: 14px 18px; }
+  .settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111;
+  }
+  .switch { position: relative; display: inline-block; width: 36px; height: 20px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .slider {
+    position: absolute; inset: 0; cursor: pointer;
+    background: rgba(255,255,255,0.35);
+    border-radius: 20px;
+    transition: background 0.25s ease;
+  }
+  .switch .slider::before {
+    content: "";
+    position: absolute; left: 3px; top: 3px;
+    height: 14px; width: 14px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+  }
+  .switch input:checked + .slider { background: #2fa5a0; }
+  .switch input:checked + .slider::before { transform: translateX(16px); }
+
+  /* ---------- Layout ---------- */
+  .page-grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 36px 32px 60px;
+    display: grid;
+    grid-template-columns: 210px minmax(0, 1fr) 300px;
+    gap: 40px;
+    align-items: start;
+  }
+  @media (max-width: 980px) {
+    .page-grid { grid-template-columns: 1fr; padding: 28px 20px 48px; gap: 32px; }
+    .col-left { position: static !important; order: 2; max-height: none; }
+    main { order: 1; }
+    .col-right { order: 3; }
+    /* On mobile, the sidebar shows only the journal cover — the associated-publication
+       link, contents list, and prev/next nav are dropped for a simpler layout. */
+    .col-left .issue-link,
+    .col-left .issue-date,
+    .col-left .contents-heading,
+    .col-left .contents-list,
+    .col-left .article-prevnext {
+      display: none;
+    }
+    .issue-cover { margin-bottom: 0; }
+  }
+  @media (max-width: 480px) {
+    .page-grid { padding: 22px 16px 40px; gap: 28px; }
+  }
+
+  /* ---------- Left column (sticky cover + TOC) ---------- */
+  .col-left {
+    position: sticky;
+    top: 24px;
+    align-self: start;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding-right: 4px;
+  }
+  .col-left::-webkit-scrollbar { width: 6px; }
+  .col-left::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 3px; }
+
+  .issue-cover {
+    width: 100%; aspect-ratio: 3/4; border-radius: 18px;
+    background: linear-gradient(160deg, #e5eaf0, var(--plum));
+    margin-bottom: 12px;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.15);
+    overflow: hidden;
+  }
+  .issue-cover img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .issue-link { display: block; font-size: 0.95rem; margin-bottom: 2px; }
+  .issue-date { display: block; font-size: 0.95rem; margin-bottom: 22px; }
+
+  .contents-heading { font-weight: 700; font-size: 1.05rem; margin: 0 0 10px; }
+  .contents-list a {
+    display: block; padding: 5px 0; font-size: 0.92rem; color: var(--ink);
+    border-left: 2px solid transparent;
+    padding-left: 8px;
+    margin-left: -8px;
+  }
+  .contents-list a:hover { color: var(--highlight); border-left-color: var(--highlight); text-decoration: none; }
+  .contents-list a.toc-active { color: var(--highlight); font-weight: 700; border-left-color: var(--highlight); }
+
+  .article-prevnext { margin-top: 22px; display: flex; gap: 20px; font-size: 0.95rem; }
+  .article-prevnext a { display: inline-flex; align-items: center; gap: 4px; }
+
+  /* ---------- Center column ---------- */
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 20px; flex-wrap: wrap; }
+  .breadcrumb a { color: var(--ink-soft); }
+  .breadcrumb a:hover { color: var(--highlight); text-decoration: none; }
+  .breadcrumb svg { color: #b7b7b7; }
+  .breadcrumb .breadcrumb-current { color: var(--ink); }
+
+  .badge-row { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; flex-wrap: wrap; }
+  .article-type-label {
+    display: inline-block; background: #e3e3ea; color: var(--ink-soft);
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 10px;
+  }
+  .oa-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--oa-amber);
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase;
+  }
+  .share-icons { display: flex; align-items: center; gap: 14px; margin-left: auto; color: var(--ink-soft); }
+  .share-icons a { color: var(--ink-soft); display: inline-flex; }
+  .share-icons a:hover { color: var(--highlight); }
+  @media (max-width: 700px) { .share-icons { margin-left: 0; width: 100%; } }
+
+  /* ---------- Share popup (used by both the top-bar Share button and the toolbar Share link) ---------- */
+  .share-popup {
+    position: fixed;
+    width: min(300px, calc(100vw - 24px));
+    background: var(--bg-surface);
+    border: 1px solid var(--rule);
+    border-radius: 18px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+    padding: 18px;
+    z-index: 500;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .share-popup.open { display: flex; }
+  .share-popup-header { display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: 0.92rem; color: var(--ink); }
+  .share-popup-close { background: none; border: none; padding: 4px; margin: -4px; cursor: pointer; color: var(--ink-soft); display: inline-flex; border-radius: 50%; }
+  .share-popup-close:hover { background: var(--panel-blue); color: var(--ink); }
+  .share-message-preview {
+    background: var(--panel-blue); border-radius: 10px; padding: 10px 12px;
+    font-size: 0.82rem; color: var(--ink-soft); line-height: 1.5;
+    max-height: 110px; overflow-y: auto; white-space: pre-wrap;
+  }
+  .share-popup-actions { display: flex; gap: 8px; }
+  .share-action-btn {
+    flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 9px 10px; border-radius: 10px; border: 1px solid var(--rule);
+    background: var(--bg-page); color: var(--ink); font-family: inherit;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer; text-decoration: none;
+  }
+  .share-action-btn:hover { background: var(--panel-blue); text-decoration: none; }
+  .share-social-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-soft); margin-top: -2px; }
+  .share-social-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .share-social-btn {
+    width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--panel-blue); color: var(--ink); flex-shrink: 0;
+  }
+  .share-social-btn:hover { background: var(--rule); }
+
+  h1.article-title { font-family: var(--serif); font-weight: 700; font-size: 2.1rem; line-height: 1.28; margin: 0 0 22px; }
+
+  .title-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 14px; margin-bottom: 22px; }
+  .title-row h1.article-title { margin-bottom: 0; }
+
+  /* ---- CTA button with pure CSS hover-reveal animation ---- */
+  .cta-button {
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 22px;
+    border: none;
+    border-radius: 20px;
+    background: var(--plum);
+    color: #fff;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    vertical-align: middle;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
+  }
+  .cta-button .cta-label { margin-right: 30px; transition: opacity 0.4s ease; }
+  .cta-button:hover .cta-label { opacity: 0; }
+  .cta-button .cta-icon-wrap {
+    position: absolute; top: 4px; right: 4px; bottom: 4px; width: 26%;
+    border-radius: 16px; background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center; color: #fff;
+    transition: width 0.4s ease;
+  }
+  .cta-button:hover .cta-icon-wrap { width: calc(100% - 8px); }
+  .cta-button:active .cta-icon-wrap { transform: scale(0.95); }
+
+  /* ---- Author list with ORCID badges ---- */
+  .author-list { font-size: 1.05rem; margin-bottom: 18px; display: flex; align-items: center; flex-wrap: wrap; gap: 3px; }
+  .author-item { display: inline-flex; align-items: center; gap: 4px; }
+  .author-item a.author-name { text-decoration: underline; }
+  .author-email-icon, .orcid-icon { display: inline-flex; align-items: center; }
+  .author-email-icon { color: var(--ink-soft); }
+  .orcid-icon svg { display: block; }
+  .orcid-icon { color: var(--orcid-green); }
+  .author-sep { color: var(--ink-soft); margin-right: 2px; }
+
+  .citation-line { font-size: 1rem; color: var(--ink); margin-bottom: 4px; overflow-wrap: anywhere; }
+  .citation-line em { font-style: italic; }
+
+  .pub-line { font-size: 0.95rem; margin-bottom: 24px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .pub-line b { font-weight: 700; }
+  .inline-icon-link { display: inline-flex; align-items: center; gap: 4px; font-weight: 700; color: var(--ink); cursor: pointer; }
+  .inline-icon-link:hover { color: var(--highlight); }
+
+  .toolbar { display: flex; gap: 34px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; }
+  .toolbar a { color: var(--ink); display: flex; align-items: center; gap: 8px; }
+  .toolbar a:hover { color: var(--highlight); text-decoration: none; }
+
+  /* ---- Full article body ---- */
+  .abstract-panel {
+    background: var(--panel-blue);
+    border-radius: 26px;
+    padding: 32px 34px;
+    margin-top: 28px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.03);
+  }
+  body.dark-mode .abstract-panel { box-shadow: 0 12px 30px rgba(0,0,0,0.25); border-color: rgba(255,255,255,0.05); }
+  h2.abstract-heading { font-family: var(--sans); font-weight: 700; font-size: 1.5rem; margin: 0 0 18px; }
+  .abstract-panel p { font-family: var(--serif); font-size: 1.05rem; line-height: 1.75; margin: 0 0 16px; color: var(--ink); }
+  .abstract-panel p:last-child { margin-bottom: 0; }
+
+  .keyword-row { margin-top: 22px; font-size: 0.9rem; }
+  .keyword-chip {
+    display: inline-block; background: var(--bg-surface); border: 1px solid var(--chip-border);
+    border-radius: 999px; padding: 4px 14px; margin: 0 8px 8px 0;
+    transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
+  }
+  .keyword-chip:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.08); }
+
+  .article-section { margin-top: 42px; scroll-margin-top: 24px; }
+  .article-section h2 {
+    font-family: var(--serif); font-weight: 700; font-size: 1.45rem;
+    margin: 0 0 16px; padding-bottom: 8px; border-bottom: 2px solid var(--highlight); display: inline-block;
+  }
+  .article-section h3 { font-family: var(--sans); font-weight: 700; font-size: 1.1rem; margin: 26px 0 10px; }
+  .article-section p { font-family: var(--serif); font-size: 1.02rem; line-height: 1.8; margin: 0 0 16px; color: var(--ink); }
+
+  .figure-placeholder {
+    margin: 22px 0; padding: 26px; text-align: center; background: var(--figure-bg); border: 1px dashed var(--figure-border); border-radius: 18px;
+    font-family: var(--sans); font-size: 0.85rem; color: var(--ink-soft);
+  }
+
+  .ref-list { list-style: none; margin: 0; padding: 0; }
+  .ref-list li {
+    font-family: var(--serif); font-size: 0.95rem; line-height: 1.7; margin-bottom: 14px;
+    padding-left: 1.6em; text-indent: -1.6em;
+  }
+
+  .copyright-note { margin-top: 30px; font-size: 0.82rem; color: var(--ink-soft); }
+
+  /* ---------- Right column ---------- */
+  .alerts-heading { font-weight: 700; font-size: 1.15rem; margin: 0 0 12px; }
+  .alerts-list { margin-bottom: 30px; }
+  .alerts-list a { display: block; padding: 6px 0; font-size: 0.95rem; }
+
+  .more-oa-heading { font-weight: 700; font-size: 1.1rem; margin: 26px 0 12px; }
+  .oa-pill {
+    display: inline-block; border: 1px solid var(--chip-border); border-radius: 999px;
+    padding: 6px 16px; margin: 0 8px 8px 0; font-size: 0.9rem;
+    transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease, background 0.25s ease;
+  }
+  .oa-pill:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0,0,0,0.08); background: var(--panel-blue); }
+
+  /* ---------- Footer ---------- */
+  .site-footer {
+    background: linear-gradient(160deg, var(--plum) 0%, #1f232b 100%);
+    color: #fff;
+    padding: 56px 32px 0;
+    margin-top: 20px;
+    border-radius: 28px 28px 0 0;
+  }
+  .site-footer-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 40px;
+    padding-bottom: 44px;
+  }
+  .footer-brand-wordmark { font-family: var(--condensed); font-weight: 700; text-transform: uppercase; font-size: 1.6rem; line-height: 1.15; margin-bottom: 14px; }
+  .footer-brand-tagline { font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 260px; }
+  .footer-col-heading { font-family: var(--sans); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); margin: 0 0 14px; }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; }
+  .site-footer li { padding: 6px 0; font-size: 0.92rem; }
+  .site-footer a { color: rgba(255,255,255,0.88); }
+  .site-footer a:hover { color: #fff; }
+  .site-footer-bottom {
+    max-width: var(--max-width); margin: 0 auto;
+    padding: 20px 0 26px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 0.85rem; color: rgba(255,255,255,0.55);
+  }
+  .site-footer-bottom a { color: rgba(255,255,255,0.55); }
+  .site-footer-bottom a:hover { color: #fff; }
+  @media (max-width: 900px) { .site-footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .site-footer-inner { grid-template-columns: 1fr; } }
+
+  /* ---------- Small-screen typography & spacing ---------- */
+  @media (max-width: 700px) {
+    h1.article-title { font-size: 1.55rem; }
+    .abstract-panel { padding: 22px 20px; }
+    .article-section h2 { font-size: 1.2rem; }
+    .breadcrumb { font-size: 0.7rem; }
+  }
+  @media (max-width: 480px) {
+    h1.article-title { font-size: 1.35rem; }
+    .cta-button { width: 100%; justify-content: center; }
+    .title-row { flex-direction: column; align-items: stretch; }
+    .keyword-chip, .oa-pill { font-size: 0.82rem; padding: 4px 10px; }
+    .toolbar { gap: 20px; flex-wrap: wrap; }
+  }
+
+  /* ---------- Supplemental file page ---------- */
+  a.cta-button:hover, .download-btn:hover { text-decoration: none; }
+  /* Center the download button on the title line instead of baseline-aligning it */
+  @media (min-width: 481px) { .title-row { align-items: center; } }
+  body.dark-mode .cta-button, body.dark-mode .download-btn { background: #30363d; }
+
+  .supp-for { font-family: var(--serif); font-size: 1.12rem; line-height: 1.6; margin: 0 0 22px; }
+  .supp-for a { text-decoration: underline; }
+
+  .fact-grid {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 24px;
+    margin: 8px 0 0; padding-top: 22px; border-top: 1px solid rgba(128,128,128,0.28);
+  }
+  .fact-grid dt { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); margin: 0 0 2px; }
+  .fact-grid dd { margin: 0; font-size: 0.98rem; font-weight: 700; }
+  @media (max-width: 700px) { .fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  /* File list */
+  .file-row {
+    display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 16px; align-items: center;
+    padding: 16px 18px; margin-bottom: 12px;
+    background: var(--bg-surface); border: 1px solid var(--rule); border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    transition: box-shadow 0.25s ease;
+  }
+  .file-row:hover { box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
+  .file-type {
+    width: 52px; height: 52px; border-radius: 14px; color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.78rem; letter-spacing: 0.02em;
+  }
+  .ft-data { background: #1c3a5e; }
+  .ft-doc  { background: #9c6209; }
+  .ft-code { background: #1f7f7b; }
+  .file-name { font-weight: 700; font-size: 1rem; overflow-wrap: anywhere; }
+  .file-name a { color: var(--link); }
+  .file-desc { font-size: 0.92rem; line-height: 1.5; color: var(--ink-soft); margin: 2px 0 6px; }
+  .file-meta { display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 0.82rem; font-weight: 600; color: var(--ink-soft); }
+
+  .download-btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 18px;
+    border-radius: 19px; background: var(--plum); color: #fff;
+    font-weight: 600; font-size: 0.88rem; white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), box-shadow 0.25s ease;
+  }
+  .download-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+  @media (max-width: 560px) {
+    .file-row { grid-template-columns: 44px minmax(0, 1fr); gap: 12px 14px; }
+    .file-type { width: 44px; height: 44px; border-radius: 12px; font-size: 0.7rem; }
+    .download-btn { grid-column: 1 / -1; justify-content: center; }
+  }
+
+  /* Data dictionary */
+  .table-scroll { overflow-x: auto; border: 1px solid var(--rule); border-radius: 18px; margin: 18px 0; }
+  .data-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 0.92rem; }
+  .data-table th, .data-table td { text-align: left; vertical-align: top; padding: 11px 16px; border-bottom: 1px solid var(--rule); }
+  .data-table.narrow { min-width: 0; }
+  .data-table thead th { background: var(--panel-blue); font-weight: 700; font-size: 0.85rem; }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .data-table code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.86rem;
+    background: var(--panel-blue); padding: 2px 6px; border-radius: 6px;
+  }
+
+  /* Usage steps */
+  .article-section ol { font-family: var(--serif); font-size: 1.02rem; line-height: 1.8; margin: 0 0 16px; padding-left: 1.4em; }
+  .article-section ol li { margin-bottom: 6px; padding-left: 4px; }
+
+  /* Version history */
+  .version-list { list-style: none; margin: 0; padding: 0; }
+  .version-list li { position: relative; margin-left: 6px; padding: 0 0 22px 22px; border-left: 2px solid var(--rule); }
+  .version-list li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .version-list li::before {
+    content: ""; position: absolute; left: -7px; top: 5px; width: 12px; height: 12px;
+    border-radius: 50%; background: var(--highlight);
+  }
+  .version-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 2px; }
+  .version-tag { font-weight: 700; font-size: 1rem; }
+  .version-date { font-size: 0.85rem; color: var(--ink-soft); }
+  .version-note { font-size: 0.95rem; }
+
+  /* Citation */
+  .cite-box {
+    font-family: var(--serif); font-size: 0.98rem; line-height: 1.7; overflow-wrap: anywhere;
+    background: var(--panel-blue); border-radius: 18px; padding: 18px 22px; margin: 0 0 14px;
+  }
+  .copy-btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px;
+    border-radius: 18px; border: 1px solid var(--chip-border); background: var(--bg-surface);
+    color: var(--ink); font-family: var(--sans); font-weight: 600; font-size: 0.88rem; cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .copy-btn:hover { background: var(--panel-blue); }
+  .copy-status { margin-left: 10px; font-size: 0.85rem; color: var(--ink-soft); }
+
+  /* Right column: associated article */
+  .assoc-card { padding: 18px 20px; margin-bottom: 30px; background: var(--panel-blue); border-radius: 22px; }
+  .assoc-title { font-family: var(--serif); font-weight: 700; font-size: 0.98rem; line-height: 1.5; margin-bottom: 8px; }
+  .assoc-cite { font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 12px; }
+  .assoc-link { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 0.92rem; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .file-row, .download-btn, .copy-btn { transition: none; }
+    .download-btn:hover { transform: none; }
+  }
+
+  /* ---------- Search scope dropdown (custom, replaces native select) ---------- */
+  /* The pill no longer clips its children so the list can open below it. */
+  .nav-search { overflow: visible; }
+  .search-scope { position: relative; display: flex; align-self: stretch; flex-shrink: 0; }
+  .nav-search .scope-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 16px 13px 20px;
+    border: none; border-right: 1px solid rgba(255,255,255,0.25); border-radius: 999px 0 0 999px;
+    background: transparent; color: rgba(255,255,255,0.95);
+    font-family: var(--sans); font-size: 0.92rem; white-space: nowrap; cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .nav-search .scope-btn:hover { background: rgba(255,255,255,0.08); }
+  .nav-search .scope-btn svg { width: 12px; height: 12px; transition: transform 0.2s ease; }
+  .nav-search .scope-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+  .scope-list {
+    position: absolute; top: calc(100% + 10px); left: 0; z-index: 30;
+    width: max-content; min-width: 100%; margin: 0; padding: 8px; list-style: none;
+    background: rgba(22,24,29,0.94);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 18px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+  .scope-list.open { opacity: 1; visibility: visible; transform: none; }
+  .scope-list li {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    padding: 10px 14px; border-radius: 12px;
+    color: #fff; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .scope-list li:hover, .scope-list li:focus { background: rgba(255,255,255,0.14); outline: none; }
+  .scope-list li:focus-visible { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7); }
+  .scope-list li[aria-selected="true"]::after {
+    content: ""; flex-shrink: 0; width: 14px; height: 14px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>") no-repeat center / contain;
+  }
+  @media (max-width: 860px) { .search-scope { display: none; } }
+
+  /* Search input fills the pill; no ring when focused */
+  .nav-search.nav-search-lg .search-input { flex: 1 1 0; width: auto; min-width: 0; max-width: none; }
+  .nav-search input:focus-visible { box-shadow: none; }
+
+  /* Magnifier sits at the right end of the pill */
+  .nav-search .search-submit { padding: 0 22px 0 10px; border-radius: 0 999px 999px 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scope-list, .nav-search .scope-btn, .nav-search .scope-btn svg { transition: none; }
+  }
+
+  /* ---------- Mobile: more room between the nav buttons and the page title ---------- */
+  @media (max-width: 640px) {
+    .journal-hero-topbar { row-gap: 32px; padding-top: 28px; }
+  }
+
+  /* ---------- Low Performance + Animations off ---------- */
+  /* Copied verbatim from the main WildREF page (index.html): Unified Kill Switch for Low Perf and Disabled Animations */
+  body.low-perf *,
+  body.anims-disabled *,
+  body.low-perf *::before,
+  body.anims-disabled *::before,
+  body.low-perf *::after,
+  body.anims-disabled *::after {
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+  }
+
+  /* Extras for this page: no hover lift, and keep the download button label visible instead of swapping it for the icon */
+  body.low-perf .menu-btn:hover, body.anims-disabled .menu-btn:hover,
+  body.low-perf .home-btn:hover, body.anims-disabled .home-btn:hover,
+  body.low-perf .cta-button:hover, body.anims-disabled .cta-button:hover,
+  body.low-perf .download-btn:hover, body.anims-disabled .download-btn:hover,
+  body.low-perf .keyword-chip:hover, body.anims-disabled .keyword-chip:hover,
+  body.low-perf .oa-pill:hover, body.anims-disabled .oa-pill:hover { transform: none !important; }
+  body.low-perf .cta-button:hover .cta-label, body.anims-disabled .cta-button:hover .cta-label { opacity: 1 !important; }
+  body.low-perf .cta-button:hover .cta-icon-wrap, body.anims-disabled .cta-button:hover .cta-icon-wrap { width: 26% !important; }
+
+  /* Low Performance only: every glass (translucent + blurred) surface becomes a solid one.
+     Colors come from the theme tokens, so they follow light and dark mode. */
+  body.low-perf * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none; }
+  body.low-perf .menu-btn, body.low-perf .home-btn, body.low-perf .nav-search, body.low-perf .society-block,
+  body.low-perf .dropdown-menu, body.low-perf .scope-list {
+    background: var(--bg-surface);
+    border-color: var(--rule);
+    color: var(--ink);
+    text-shadow: none;
+  }
+  body.low-perf .menu-btn:hover, body.low-perf .home-btn:hover { background: var(--panel-blue); }
+  body.low-perf .hamburger span { background: currentColor; filter: none; }
+
+  /* Search bar */
+  body.low-perf .nav-search .scope-btn { color: var(--ink); border-right-color: var(--rule); }
+  body.low-perf .nav-search .scope-btn:hover { background: var(--panel-blue); }
+  body.low-perf .nav-search input { color: var(--ink); }
+  body.low-perf .nav-search input::placeholder { color: var(--ink-soft); }
+  body.low-perf .nav-search .search-submit { color: var(--ink-soft); }
+  body.low-perf .nav-search button:focus-visible, body.low-perf .scope-list li:focus-visible { box-shadow: inset 0 0 0 2px var(--link); }
+
+  /* Menus and lists */
+  body.low-perf .dropdown-item-link, body.low-perf .settings-item, body.low-perf .scope-list li { color: var(--ink); }
+  body.low-perf .dropdown-item-link:hover, body.low-perf .scope-list li:hover, body.low-perf .scope-list li:focus { background: var(--panel-blue); }
+  body.low-perf .switch input:not(:checked) + .slider { background: var(--chip-border); }
+  body.low-perf .scope-list li[aria-selected="true"]::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>"); }
+  body.low-perf.dark-mode .scope-list li[aria-selected="true"]::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>"); }
+</style>
+</head>
+<body>
+
+  <!-- HERO BANNER (image + dark overlay) -->
+  <div class="journal-hero">
+    <div class="journal-hero-bg" style="background-image:url('../img/IMG_4113.JPG');"></div>
+    <div class="journal-hero-overlay"></div>
+
+    <div class="journal-hero-topbar">
+      <div class="journal-hero-topbar-left">
+        <div class="nav-wrapper">
+          <button class="menu-btn" id="menuToggle">
+            Menu
+            <div class="hamburger"><span></span><span></span></div>
+          </button>
+        </div>
+
+        <a href="../publication-repository.html" class="home-btn" id="homeBtn" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </a>
+
+        <div class="settings-wrapper">
+          <button class="home-btn" id="settingsToggle" title="Settings" aria-label="Settings">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Both dropdowns are direct children of journal-hero-topbar-left (position:relative),
+             so they always open from the exact same anchor point regardless of which
+             trigger — Menu or Settings — opened them. -->
+        <div class="dropdown-menu" id="mainDropdown">
+          <a href="../publication-repository.html" class="dropdown-item-link">Browse</a>
+          <a href="../publication-repository.html#collections" class="dropdown-item-link">Collections</a>
+          <a href="../publication-repository.html#deposit" class="dropdown-item-link">Deposit</a>
+          <a href="../publication-repository.html#contact" class="dropdown-item-link">Contact</a>
+          <a href="#" class="dropdown-item-link">About</a>
+        </div>
+        <div class="dropdown-menu settings-dropdown" id="settingsDropdown">
+          <div class="settings-item">
+            <span>Dark Mode</span>
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="settings-item">
+            <span>Low Performance</span>
+            <label class="switch">
+              <input type="checkbox" id="lowPerfToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="settings-item">
+            <span>Animations</span>
+            <label class="switch">
+              <input type="checkbox" id="animationToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="journal-hero-topbar-center">
+        <div class="journal-wordmark">WildREF Publication<br>repository</div>
+      </div>
+
+      
+    </div>
+
+    <div class="journal-hero-content">
+      <div class="nav-search nav-search-lg">
+        <div class="search-scope" id="searchScope">
+          <button type="button" class="scope-btn" id="scopeBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="scopeList" aria-label="Search scope">
+            <span id="scopeLabel">All items</span>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <ul class="scope-list" id="scopeList" role="listbox" aria-label="Search scope">
+            <li role="option" tabindex="-1" data-value="all" aria-selected="true">All items</li>
+            <li role="option" tabindex="-1" data-value="publications" aria-selected="false">Publications</li>
+            <li role="option" tabindex="-1" data-value="supplements" aria-selected="false">Supplemental materials</li>
+          </ul>
+          <input type="hidden" name="scope" id="scopeValue" value="all">
+        </div>
+        <input type="search" class="search-input" placeholder="Search" />
+        <button class="search-submit" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-grid">
+
+    <!-- LEFT COLUMN: sticky cover + table of contents -->
+    <aside class="col-left">
+      <div class="issue-cover">
+        <img src="../img/pan-pacific_entomologist.webp" alt="Cover of the associated publication">
+      </div>
+      <a href="paper.html" class="issue-link">Associated publication</a>
+      <a href="#" class="issue-date">Deposited September 2026</a>
+
+      <div class="contents-heading">Supplement Contents</div>
+      <div class="contents-list">
+        <a href="#about">About this supplement</a>
+        <a href="#files">File</a>
+        <a href="#inside">What is inside</a>
+        <a href="#versions">Version history</a>
+        <a href="#cite">How to cite</a>
+      </div>
+
+      <div class="article-prevnext">
+        <a href="paper.html">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          Back to publication
+        </a>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN -->
+    <main>
+      <div class="breadcrumb">
+        <a href="../publication-repository.html">Home</a>
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <a href="paper.html">Melissodes Natural Enemies</a>
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        <span class="breadcrumb-current">Supplementary Material</span>
+      </div>
+
+      <div class="badge-row">
+        <span class="article-type-label">Supplementary Material</span>
+        <span class="oa-badge" title="Freely available to everyone, permanently">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="10" width="16" height="10" rx="2"></rect>
+            <path d="M7 10V7a5 5 0 0 1 9-3"></path>
+          </svg>
+          Open Access
+        </span>
+        <div class="share-icons">
+          <a href="#" id="shareFacebookTop" target="_blank" rel="noopener" title="Share on Facebook" aria-label="Share on Facebook">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a href="#" id="shareXTop" target="_blank" rel="noopener" title="Share on X" aria-label="Share on X">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"></path></svg>
+          </a>
+          <a href="#" id="shareLinkedinTop" target="_blank" rel="noopener" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+          </a>
+          <a href="#" id="shareEmailTop" title="Email this page" aria-label="Email this page">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 6l-10 7L2 6"></path></svg>
+          </a>
+          <a href="#" id="shareMoreTop" title="More share options" aria-label="More share options" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"></line><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="title-row">
+        <h1 class="article-title">Supplementary Material</h1>
+        <a class="cta-button" href="files/Supplemental_File_1.txt" download>
+          <span class="cta-label">Download TXT</span>
+          <i class="cta-icon-wrap"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><polyline points="7 11 12 16 17 11"></polyline><path d="M5 20h14"></path></svg></i>
+        </a>
+      </div>
+
+      <p class="supp-for">Supplement to <a href="paper.html">A review of the predators, parasites, and parasitoids of the genus Melissodes Latreille, 1829 (Hymenoptera: Apidae) with biological notes of its natural enemies</a></p>
+
+      <div class="author-list">
+        <span class="author-item">
+          <a href="#" class="author-name">Frank E. Hogland</a>
+          <span class="author-email-icon" title="Corresponding author">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+              <path d="M22 6l-10 7L2 6"></path>
+            </svg>
+          </span>
+          <a href="#" class="orcid-icon" title="ORCID iD">
+            <svg viewBox="0 0 24 24" width="15" height="15">
+              <circle cx="12" cy="12" r="11" fill="currentColor"></circle>
+              <text x="12" y="16" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#fff" font-weight="700">iD</text>
+            </svg>
+          </a>
+        </span>
+        <span class="author-sep">,</span>
+        <span class="author-item">
+          <a href="https://orcid.org/0000-0002-8173-3171" class="author-name">Melissa J. Reynolds-Hogland</a>
+          <a href="https://orcid.org/0000-0002-8173-3171" class="orcid-icon" title="ORCID iD">
+            <svg viewBox="0 0 24 24" width="15" height="15">
+              <circle cx="12" cy="12" r="11" fill="currentColor"></circle>
+              <text x="12" y="16" text-anchor="middle" font-size="10" font-family="Arial, sans-serif" fill="#fff" font-weight="700">iD</text>
+            </svg>
+          </a>
+        </span>
+      </div>
+
+      <div class="citation-line">
+        Deposited in the <em>WildREF Publication repository</em>, September 2026,
+      </div>
+      <div class="citation-line">
+        <a href="#">https://doi.org/10.0000/example.0000</a>
+      </div>
+
+      <div class="pub-line">
+        <b>Deposited:</b> 20 September 2026</span>
+        <a class="inline-icon-link" href="#versions">
+          Version history
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </a>
+      </div>
+
+      <div class="toolbar">
+        <a href="#cite">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M7 7c-2.2 0-4 1.8-4 4v6h6v-6H6c0-1.1.9-2 2-2V7zm10 0c-2.2 0-4 1.8-4 4v6h6v-6h-3c0-1.1.9-2 2-2V7z"></path>
+          </svg>
+          Cite
+        </a>
+        <a href="#permissions">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="7" cy="15" r="4"></circle>
+            <path d="M10.8 11.2L20 2M15.5 6.5l2.7 2.7M12.7 9.3l2.7 2.7"></path>
+          </svg>
+          Permissions
+        </a>
+        <a href="#" id="toolbarShare">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.6" y1="10.5" x2="15.4" y2="6.5"></line>
+            <line x1="8.6" y1="13.5" x2="15.4" y2="17.5"></line>
+          </svg>
+          Share
+        </a>
+      </div>
+
+      <!-- ABOUT -->
+      <div class="abstract-panel" id="about">
+        <h2 class="abstract-heading">About this supplement</h2>
+        <p>
+          This file accompanies <a href="paper.html">A review of the predators, parasites, and parasitoids of the genus Melissodes Latreille, 1829 (Hymenoptera: Apidae) with biological notes of its natural enemies</a>. It contains the prompt used for LLM literature mining filtration to remove noise from the list of raw extracted records.
+        </p>
+        <p>
+          The file is available under the same CC BY 4.0 license as the publication.
+        </p>
+        <dl class="fact-grid">
+          <div><dt>Format</dt><dd>TXT</dd></div>
+          <div><dt>File size</dt><dd>2 KB</dd></div>
+          <div><dt>Pages</dt><dd>1</dd></div>
+          <div><dt>License</dt><dd>CC BY 4.0</dd></div>
+          <div><dt>Version</dt><dd>1.0</dd></div>
+          <div><dt>Last updated</dt><dd>20 September 2026</dd></div>
+        </dl>
+      </div>
+
+      <!-- FILES -->
+      <div class="article-section" id="files">
+        <h2>File</h2>
+      <div class="file-row">
+        <div class="file-type ft-doc" aria-hidden="true">TXT</div>
+        <div class="file-info">
+          <div class="file-name"><a href="files/Supplemental_File_1.txt" download>Supplemental_File_1.txt</a></div>
+          <div class="file-desc">LLM prompt used for literature mining record filtration.</div>
+          <div class="file-meta"><span>2 KB</span><span>1 page</span></div>
+        </div>
+        <a class="download-btn" href="files/Supplemental_File_1.txt" download aria-label="Download Supplemental_File_1.txt">Download <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"></path><polyline points="7 11 12 16 17 11"></polyline><path d="M5 20h14"></path></svg></a>
+      </div>
+      </div>
+
+      <!-- WHAT'S INSIDE -->
+      <div class="article-section" id="inside">
+        <h2>What is inside</h2>
+        <div class="table-scroll">
+          <table class="data-table narrow">
+            <thead>
+              <tr><th scope="col">Section</th><th scope="col">Pages</th></tr>
+            </thead>
+            <tbody>
+            <tr><td>LLM filtration prompt</td><td>1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- VERSION HISTORY -->
+      <div class="article-section" id="versions">
+        <h2>Version history</h2>
+        <ul class="version-list">
+          <li>
+            <div class="version-head"><span class="version-tag">Version 1.0</span><span class="version-date">20 September 2026</span></div>
+            <div class="version-note">Initial release alongside the publication.</div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- CITE -->
+      <div class="article-section" id="cite">
+        <h2>How to cite</h2>
+        <div class="cite-box" id="citeText">
+          Hogland, F. E., M. J. Reynolds-Hogland. 2026. Supplemental File 1 for &ldquo;A review of the predators, parasites, and parasitoids of the genus <i>Melissodes</i> Latreille, 1829 (Hymenoptera: Apidae) with biological notes of its natural enemies.&rdquo; <em>WildREF Publication repository</em>. <a href="#">https://doi.org/10.0000/example.0000.s1</a>
+        </div>
+        <button type="button" class="copy-btn" id="copyCite"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> Copy citation</button>
+        <span class="copy-status" id="copyStatus" role="status" aria-live="polite"></span>
+      </div>
+
+      <div class="copyright-note" id="permissions">
+        &copy; 2026 The Author(s). Hosted by the WildREF Publication repository. This supplementary file is distributed under the terms of the <a href="#">CC BY 4.0 license</a>, permitting unrestricted use, distribution, and reproduction in any medium, provided the original work is properly cited.
+      </div>
+    </main>
+
+
+    <!-- RIGHT COLUMN -->
+    <aside class="col-right">
+      <div class="alerts-heading">Associated publication</div>
+      <div class="assoc-card">
+        <div class="assoc-title">A review of the predators, parasites, and parasitoids of the genus Melissodes Latreille, 1829 (Hymenoptera: Apidae) with biological notes of its natural enemies</div>
+        <div class="assoc-cite">Deposited September 2026</div>
+        <a class="assoc-link" href="paper.html">Read the publication <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></a>
+      </div>
+
+      <div class="alerts-heading">Quick links</div>
+      <div class="alerts-list">
+        <a href="../publication-repository.html">Browse publications</a>
+        <a href="../publication-repository.html#deposit">Deposit guidelines</a>
+        <a href="#permissions">Rights &amp; permissions</a>
+        <a href="../publication-repository.html#contact">Contact the repository</a>
+      </div>
+
+      <div class="more-oa-heading">More from the repository</div>
+      <div>
+        <span class="oa-pill">Biological Sciences</span>
+        <span class="oa-pill">Entomology</span>
+        <span class="oa-pill">Invertebrates</span>
+        <span class="oa-pill">Science and Mathematics</span>
+        <span class="oa-pill">Zoology and Animal Sciences</span>
+        <span class="oa-pill">Publications</span>
+        <span class="oa-pill">Collections</span>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-wordmark">WildREF Publication<br>repository</div>
+        <p class="footer-brand-tagline">An open repository for wildlife ecology and systematics publications.</p>
+      </div>
+      <div>
+        <div class="footer-col-heading">Repository</div>
+        <ul>
+          <li><a href="#">About the Repository</a></li>
+          <li><a href="../publication-repository.html">Browse Publications</a></li>
+          <li><a href="../publication-repository.html">Recent Deposits</a></li>
+          <li><a href="../publication-repository.html#collections">Collections</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-heading">For Authors</div>
+        <ul>
+          <li><a href="../publication-repository.html#deposit">Deposit a Publication</a></li>
+          <li><a href="../publication-repository.html#deposit">Deposit Guidelines</a></li>
+          <li><a href="#">Open Access</a></li>
+          <li><a href="#permissions">Rights &amp; Permissions</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-heading">Open Access</div>
+        <ul>
+          <li><a href="#">Open Access Policy</a></li>
+          <li><a href="#">Licensing (CC BY 4.0)</a></li>
+          <li><a href="#">Accessibility</a></li>
+          <li><a href="../publication-repository.html#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>Copyright © 2026 WildREF Publication repository. Each publication is hosted under the license chosen by its authors.</span>
+      <span><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Cookie Settings</a> &nbsp;·&nbsp; <a href="#">Legal Notice</a></span>
+    </div>
+  </footer>
+
+  <!-- SHARE POPUP (shared by the top-bar Share button and the toolbar Share link) -->
+  <div class="share-popup" id="sharePopup" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="sharePopupHeading">
+    <div class="share-popup-header">
+      <span id="sharePopupHeading">Share this supplement</span>
+      <button type="button" class="share-popup-close" id="sharePopupClose" aria-label="Close share menu">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="share-message-preview" id="shareMessagePreview"></div>
+
+    <div class="share-popup-actions">
+      <button type="button" class="share-action-btn" id="shareCopyBtn">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copy message
+      </button>
+      <a class="share-action-btn" id="shareEmailBtn" href="#">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="M22 6l-10 7L2 6"></path></svg>
+        Email
+      </a>
+    </div>
+    <span class="copy-status" id="sharePopupStatus" role="status" aria-live="polite"></span>
+
+    <div class="share-social-label">Or share on</div>
+    <div class="share-social-row">
+      <a class="share-social-btn" id="shareFacebook" target="_blank" rel="noopener" title="Share on Facebook" aria-label="Share on Facebook">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      </a>
+      <a class="share-social-btn" id="shareX" target="_blank" rel="noopener" title="Share on X" aria-label="Share on X">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l16 16M20 4L4 20"></path></svg>
+      </a>
+      <a class="share-social-btn" id="shareLinkedin" target="_blank" rel="noopener" title="Share on LinkedIn" aria-label="Share on LinkedIn">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+      </a>
+      <a class="share-social-btn" id="shareWhatsapp" target="_blank" rel="noopener" title="Share on WhatsApp" aria-label="Share on WhatsApp">
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // Highlight the active table-of-contents entry as the reader scrolls
+    const sections = document.querySelectorAll('.article-section, #about');
+    const tocLinks = document.querySelectorAll('.contents-list a');
+
+    function setActiveTocLink() {
+      let currentId = sections[0] ? sections[0].id : null;
+      sections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 120) currentId = section.id;
+      });
+      tocLinks.forEach((link) => {
+        link.classList.toggle('toc-active', link.getAttribute('href') === '#' + currentId);
+      });
+    }
+
+    document.addEventListener('scroll', setActiveTocLink, { passive: true });
+    setActiveTocLink();
+  </script>
+
+  <script>
+    // Light/dark mode toggle — now lives as a switch inside the Settings dropdown
+    // (persisted via the same 'theme' key used across the site)
+    (function () {
+      const darkModeInput = document.getElementById('darkModeToggle');
+      if (!darkModeInput) return;
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeInput.checked = true;
+      }
+
+      darkModeInput.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Glass menu + settings dropdowns (ported from the WildREF homepage nav pattern).
+    // Opening one closes the other, and clicking outside either closes both.
+    (function () {
+      const menuToggle = document.getElementById('menuToggle');
+      const dropdown = document.getElementById('mainDropdown');
+      const settingsToggle = document.getElementById('settingsToggle');
+      const settingsDropdown = document.getElementById('settingsDropdown');
+      if (!menuToggle || !dropdown || !settingsToggle || !settingsDropdown) return;
+
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!dropdown.classList.contains('active')) {
+          settingsDropdown.classList.remove('active');
+        }
+        menuToggle.classList.toggle('active');
+        dropdown.classList.toggle('active');
+      });
+
+      settingsToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!settingsDropdown.classList.contains('active')) {
+          menuToggle.classList.remove('active');
+          dropdown.classList.remove('active');
+        }
+        settingsDropdown.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !dropdown.contains(e.target)) {
+          menuToggle.classList.remove('active');
+          dropdown.classList.remove('active');
+        }
+        if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target)) {
+          settingsDropdown.classList.remove('active');
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Copy the citation text
+    (function () {
+      const btn = document.getElementById('copyCite');
+      const src = document.getElementById('citeText');
+      const status = document.getElementById('copyStatus');
+      if (!btn || !src || !status) return;
+      btn.addEventListener('click', async () => {
+        const text = src.textContent.trim().replace(/\s+/g, ' ');
+        try {
+          await navigator.clipboard.writeText(text);
+          status.textContent = 'Citation copied';
+        } catch (err) {
+          status.textContent = 'Copy failed. Select the text and copy it manually.';
+        }
+        setTimeout(() => { status.textContent = ''; }, 3000);
+      });
+    })();
+  </script>
+
+  <script>
+    // Search scope dropdown: button + listbox with keyboard support
+    (function () {
+      const root = document.getElementById('searchScope');
+      const btn = document.getElementById('scopeBtn');
+      const list = document.getElementById('scopeList');
+      const label = document.getElementById('scopeLabel');
+      const value = document.getElementById('scopeValue');
+      if (!root || !btn || !list) return;
+      const options = Array.from(list.querySelectorAll('[role="option"]'));
+
+      function selectedIndex() {
+        const i = options.findIndex((o) => o.getAttribute('aria-selected') === 'true');
+        return i < 0 ? 0 : i;
+      }
+      function open(focusIndex) {
+        list.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        options[focusIndex == null ? selectedIndex() : focusIndex].focus();
+      }
+      function close(returnFocus) {
+        list.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        if (returnFocus) btn.focus();
+      }
+      function choose(opt) {
+        options.forEach((o) => o.setAttribute('aria-selected', String(o === opt)));
+        label.textContent = opt.textContent;
+        value.value = opt.dataset.value;
+        close(true);
+      }
+
+      btn.addEventListener('click', () => {
+        if (list.classList.contains('open')) close(false); else open();
+      });
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); }
+      });
+
+      options.forEach((opt, i) => {
+        opt.addEventListener('click', () => choose(opt));
+        opt.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown') { e.preventDefault(); options[(i + 1) % options.length].focus(); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); options[(i - 1 + options.length) % options.length].focus(); }
+          else if (e.key === 'Home') { e.preventDefault(); options[0].focus(); }
+          else if (e.key === 'End') { e.preventDefault(); options[options.length - 1].focus(); }
+          else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(opt); }
+          else if (e.key === 'Escape') { e.preventDefault(); close(true); }
+          else if (e.key === 'Tab') { close(false); }
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!root.contains(e.target)) close(false);
+      });
+    })();
+  </script>
+
+  <script>
+    // Low Performance + Animations toggles.
+    // Same logic and localStorage keys as the main WildREF page (index.html), so a visitor's choice carries over.
+    (function () {
+      const lowPerfInput = document.getElementById('lowPerfToggle');
+      const animationToggle = document.getElementById('animationToggle');
+      if (!lowPerfInput || !animationToggle) return;
+
+      // 1. Load saved preferences from localStorage
+      try {
+        if (localStorage.getItem('performance') === 'low') {
+          document.body.classList.add('low-perf');
+          lowPerfInput.checked = true;
+        }
+        if (localStorage.getItem('animations') === 'disabled') {
+          document.body.classList.add('anims-disabled');
+          animationToggle.checked = false;
+        }
+      } catch (err) {}
+
+      // 2. Toggle listeners with saving
+      lowPerfInput.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('low-perf');
+          try { localStorage.setItem('performance', 'low'); } catch (err) {}
+        } else {
+          document.body.classList.remove('low-perf');
+          try { localStorage.setItem('performance', 'high'); } catch (err) {}
+        }
+      });
+
+      animationToggle.addEventListener('change', () => {
+        if (animationToggle.checked) {
+          document.body.classList.remove('anims-disabled');
+          try { localStorage.setItem('animations', 'enabled'); } catch (err) {}
+        } else {
+          document.body.classList.add('anims-disabled');
+          try { localStorage.setItem('animations', 'disabled'); } catch (err) {}
+        }
+      });
+    })();
+  </script>
+  <script>
+    // Share popup: composes a message (title + link), lets it be copied or emailed,
+    // and offers direct links to share it on other social media. Opened from the
+    // "more" icon in the top bar or the "Share" link in the toolbar. The other
+    // top-bar icons (Facebook/X/LinkedIn/Email) share directly, no popup needed.
+    (function () {
+      const pageUrl = window.location.href.split('#')[0];
+      const pageTitle = document.title;
+      const shareMessage = pageTitle + '\n' + pageUrl;
+
+      const popup = document.getElementById('sharePopup');
+      const preview = document.getElementById('shareMessagePreview');
+      const closeBtn = document.getElementById('sharePopupClose');
+      const copyBtn = document.getElementById('shareCopyBtn');
+      const emailBtn = document.getElementById('shareEmailBtn');
+      const status = document.getElementById('sharePopupStatus');
+      const moreBtn = document.getElementById('shareMoreTop');
+      const toolbarBtn = document.getElementById('toolbarShare');
+      if (!popup || !moreBtn || !toolbarBtn) return;
+
+      if (preview) preview.textContent = shareMessage;
+      if (emailBtn) emailBtn.href = 'mailto:?subject=' + encodeURIComponent(pageTitle) + '&body=' + encodeURIComponent(shareMessage);
+
+      // Direct-share links: the standalone top-bar icons, and the equivalents inside the popup
+      const socialLinks = {
+        shareFacebookTop: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl),
+        shareXTop: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareMessage),
+        shareLinkedinTop: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl),
+        shareEmailTop: 'mailto:?subject=' + encodeURIComponent(pageTitle) + '&body=' + encodeURIComponent(shareMessage),
+        shareFacebook: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(pageUrl),
+        shareX: 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareMessage),
+        shareLinkedin: 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(pageUrl),
+        shareWhatsapp: 'https://api.whatsapp.com/send?text=' + encodeURIComponent(shareMessage)
+      };
+      Object.keys(socialLinks).forEach((id) => {
+        const el = document.getElementById(id);
+        if (el) el.href = socialLinks[id];
+      });
+
+      let lastTrigger = null;
+
+      function position(trigger) {
+        const rect = trigger.getBoundingClientRect();
+        const popupWidth = popup.offsetWidth || 300;
+        let left = rect.right - popupWidth;
+        if (left < 12) left = 12;
+        const maxLeft = window.innerWidth - popupWidth - 12;
+        if (left > maxLeft) left = maxLeft;
+        let top = rect.bottom + 8;
+        popup.style.left = left + 'px';
+        popup.style.top = top + 'px';
+      }
+
+      function openPopup(trigger) {
+        lastTrigger = trigger;
+        if (status) status.textContent = '';
+        popup.classList.add('open');
+        popup.setAttribute('aria-hidden', 'false');
+        position(trigger);
+        trigger.setAttribute('aria-expanded', 'true');
+      }
+
+      function closePopup() {
+        popup.classList.remove('open');
+        popup.setAttribute('aria-hidden', 'true');
+        if (lastTrigger) lastTrigger.setAttribute('aria-expanded', 'false');
+        lastTrigger = null;
+      }
+
+      [moreBtn, toolbarBtn].forEach((trigger) => {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          if (popup.classList.contains('open') && lastTrigger === trigger) {
+            closePopup();
+          } else {
+            openPopup(trigger);
+          }
+        });
+      });
+
+      if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(shareMessage);
+            if (status) status.textContent = 'Message copied';
+          } catch (err) {
+            if (status) status.textContent = 'Copy failed. Select the text above and copy it manually.';
+          }
+          setTimeout(() => { if (status) status.textContent = ''; }, 3000);
+        });
+      }
+
+      document.addEventListener('click', (e) => {
+        if (!popup.classList.contains('open')) return;
+        if (popup.contains(e.target) || e.target === moreBtn || e.target === toolbarBtn || moreBtn.contains(e.target) || toolbarBtn.contains(e.target)) return;
+        closePopup();
+      });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && popup.classList.contains('open')) closePopup();
+      });
+      window.addEventListener('resize', () => { if (popup.classList.contains('open') && lastTrigger) position(lastTrigger); });
+      document.addEventListener('scroll', () => { if (popup.classList.contains('open') && lastTrigger) position(lastTrigger); }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>
