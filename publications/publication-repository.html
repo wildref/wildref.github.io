@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>WildREF Publication repository</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum: #16181d;
+    --link: #2c3e50;
+    --ink: #111111;
+    --ink-soft: #666666;
+    --rule: #e5eaf0;
+    --panel-blue: #f0f4f9;
+    --footer-grey: #f0f4f9;
+    --bg-page: #ffffff;
+    --bg-surface: #ffffff;
+    --chip-border: #c8c8c8;
+    --figure-bg: #f7f6f2;
+    --figure-border: #c8c3b8;
+    --views-navy: #1c3a5e;
+    --alt-teal: #2fa5a0;
+    --orcid-green: #a6ce39;
+    --oa-amber: #b5730c;
+    --oa-amber-bg: #fbeed9;
+    --serif: 'Merriweather', Georgia, serif;
+    --sans: 'Manrope', Arial, sans-serif;
+    --condensed: 'Manrope', Arial, sans-serif;
+    --max-width: 1280px;
+    --highlight: var(--plum);
+    --glass-bg: rgba(255,255,255,0.10);
+    --glass-bg-strong: rgba(255,255,255,0.16);
+    --glass-border: rgba(255,255,255,0.55);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,0.20), inset 0 1px 0 rgba(255,255,255,0.65);
+  }
+
+  body.dark-mode {
+    --ink: #f0f6fc;
+    --ink-soft: #8b949e;
+    --rule: #30363d;
+    --panel-blue: #161b22;
+    --footer-grey: #0d1117;
+    --bg-page: #0d1117;
+    --bg-surface: #21262d;
+    --chip-border: #30363d;
+    --figure-bg: #21262d;
+    --figure-border: #30363d;
+    --link: #9db4c9;
+    --highlight: #e8b93f;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--bg-page);
+    line-height: 1.5;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--highlight); outline-offset: 2px; }
+  svg { display: block; }
+
+  /* ---------- Journal Hero Banner (image + overlay, replaces flat masthead/navbar) ---------- */
+  .journal-hero {
+    position: relative;
+    /* NOTE: no overflow:hidden here on purpose — the menu/settings dropdowns are
+       positioned absolutely and need to be able to escape the hero's box without
+       being clipped. The image + rounded corners are handled by the layer below. */
+  }
+  .journal-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    border-radius: 0 0 28px 28px;
+    z-index: 0;
+  }
+  .journal-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 0 0 28px 28px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .journal-hero-topbar {
+    position: relative;
+    /* Higher than .journal-hero-content so open dropdowns are never painted over
+       by the search bar row below, regardless of viewport width. */
+    z-index: 3;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 24px) clamp(16px, 4vw, 32px) 0;
+    padding-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: flex-start;
+    gap: clamp(10px, 2vw, 16px);
+  }
+  .journal-hero-topbar-left {
+    position: relative; /* anchors both dropdowns to this exact spot */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .journal-hero-topbar-center {
+    justify-self: center;
+    text-align: center;
+    max-width: 100%;
+  }
+  .journal-hero-topbar-right {
+    justify-self: end;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+    min-width: 0;
+  }
+  .journal-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: clamp(20px, 4vw, 28px) clamp(16px, 4vw, 32px) clamp(32px, 6vw, 48px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+  }
+  .journal-wordmark {
+    color: #fff;
+    font-family: var(--serif);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(1.3rem, 1rem + 2.2vw, 2.2rem);
+    line-height: 1.05;
+    letter-spacing: 0.01em;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  }
+  /* ---------- Glass menu button + dropdown (copied 1:1 from the WildREF index.html) ---------- */
+  .nav-wrapper { position: relative; }
+  .menu-btn {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.60);
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+    border-right-color: rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 700;
+    color: #000;
+    text-shadow: none;
+    cursor: pointer;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.80),
+      inset 1px 0 0 rgba(255, 255, 255, 0.55);
+    transition: background 0.25s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 20;
+    overflow: hidden;
+  }
+  .menu-btn:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); }
+  .hamburger { display: flex; flex-direction: column; gap: 4px; background: transparent; padding: 4px; border-radius: 50%; }
+  .hamburger span {
+    display: block; width: 14px; height: 2px; background: #000;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+  }
+  .menu-btn.active .hamburger span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+  .menu-btn.active .hamburger span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
+
+  /* Both the main nav dropdown and the settings dropdown are anchored to
+     .journal-hero-topbar-left (position:relative), so they always open from
+     the exact same spot no matter which trigger opened them. */
+  .dropdown-menu {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-bottom-color: rgba(255,255,255,0.25);
+    border-right-color: rgba(255,255,255,0.25);
+    border-radius: 20px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 0;
+    box-shadow: var(--glass-shadow);
+    z-index: 20;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px);
+    transition: opacity 0.3s cubic-bezier(0.4,0,0.2,1), transform 0.3s cubic-bezier(0.4,0,0.2,1), visibility 0.3s;
+  }
+  .dropdown-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-item-link {
+    padding: 11px 22px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #111;
+    display: block;
+    transition: background 0.2s;
+  }
+  .dropdown-item-link:hover { background: rgba(255,255,255,0.18); text-decoration: none; }
+
+  .nav-search {
+    display: flex;
+    align-items: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid var(--glass-border);
+    border-bottom-color: rgba(255,255,255,0.2);
+    border-right-color: rgba(255,255,255,0.2);
+    border-radius: 999px;
+    overflow: hidden;
+    max-width: 100%;
+    box-shadow: var(--glass-shadow);
+  }
+  .nav-search select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: none;
+    border-right: 1px solid rgba(255,255,255,0.25);
+    background: transparent
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>")
+      no-repeat right 8px center;
+    background-size: 12px 12px;
+    padding: 8px 24px 8px 10px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.9);
+    max-width: 40%;
+    text-overflow: ellipsis;
+  }
+  .nav-search select option { color: #111; background: #fff; }
+  .nav-search input { border: none; padding: 8px 10px; font-size: 0.85rem; width: 160px; max-width: 40vw; background: transparent; color: #fff; }
+  .nav-search input::placeholder { color: rgba(255,255,255,0.6); }
+  .nav-search button {
+    border: none; background: transparent; padding: 0 12px; cursor: pointer;
+    color: rgba(255,255,255,0.85); display: flex; align-items: center;
+  }
+  /* Replace the default black browser focus ring with something that matches the glass UI */
+  .nav-search select:focus,
+  .nav-search input:focus,
+  .nav-search button:focus {
+    outline: none;
+  }
+  .nav-search select:focus-visible,
+  .nav-search input:focus-visible,
+  .nav-search button:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7);
+  }
+
+  /* Larger variant used for the centered search bar at the bottom of the hero */
+  .nav-search-lg { width: 100%; max-width: min(520px, 100%); }
+  .nav-search-lg select { padding: 13px 30px 13px 16px; font-size: 0.92rem; }
+  .nav-search-lg input { padding: 13px 14px; font-size: 1rem; width: clamp(120px, 30vw, 260px); max-width: 55vw; }
+  .nav-search-lg button { padding: 0 18px; }
+  .nav-search-lg button svg { width: 18px; height: 18px; }
+
+  @media (max-width: 860px) {
+    .nav-search select { display: none; }
+  }
+  @media (max-width: 640px) {
+    .journal-hero-topbar { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .journal-hero-topbar-left { justify-content: center; }
+    .journal-hero-topbar-right { justify-self: center; justify-content: center; }
+  }
+  @media (max-width: 400px) {
+    .nav-search-lg input { width: 120px; }
+  }
+
+  /* Home + Settings triggers — ported 1:1 from the WildREF index.html .home-btn */
+  .home-btn {
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.60);
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+    border-right-color: rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    color: #000;
+    text-shadow: none;
+    cursor: pointer;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.80),
+      inset 1px 0 0 rgba(255, 255, 255, 0.55);
+    transition: background 0.25s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 300;
+    overflow: hidden;
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+  .home-btn:hover { background: rgba(255, 255, 255, 0.28); transform: translateY(-1px); text-decoration: none; }
+  .home-btn:active { transform: scale(0.95); }
+
+  /* Settings dropdown (mirrors .dropdown-menu, holds toggle switches instead of links) */
+  .settings-wrapper { position: relative; }
+  .settings-dropdown { min-width: 220px; padding: 14px 18px; }
+  .settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #111;
+  }
+  .switch { position: relative; display: inline-block; width: 36px; height: 20px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .slider {
+    position: absolute; inset: 0; cursor: pointer;
+    background: rgba(255,255,255,0.35);
+    border-radius: 20px;
+    transition: background 0.25s ease;
+  }
+  .switch .slider::before {
+    content: "";
+    position: absolute; left: 3px; top: 3px;
+    height: 14px; width: 14px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 0.25s ease;
+  }
+  .switch input:checked + .slider { background: #2fa5a0; }
+  .switch input:checked + .slider::before { transform: translateX(16px); }
+
+  /* ---------- Page header + layout ---------- */
+  [hidden] { display: none !important; }
+  .page-head { max-width: var(--max-width); margin: 0 auto; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+  .pubs-grid {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 34px 32px 56px;
+    display: grid;
+    grid-template-columns: 260px minmax(0, 1fr) 300px;
+    gap: 40px;
+    align-items: start;
+  }
+  .col-heading { font-family: var(--sans); font-weight: 700; font-size: 1.05rem; margin: 0 0 12px; }
+
+  /* ---------- Left column: latest deposit + topics ---------- */
+  .latest-box {
+    display: flex; gap: 14px; padding: 14px; margin-bottom: 30px;
+    background: var(--bg-surface); border: 1px solid var(--rule); border-radius: 22px;
+    color: var(--ink); transition: box-shadow 0.25s ease;
+  }
+  .latest-box:hover { text-decoration: none; box-shadow: 0 8px 22px rgba(0,0,0,0.08); }
+  .latest-cover {
+    width: 84px; flex-shrink: 0; aspect-ratio: 3/4; border-radius: 12px; overflow: hidden;
+    background: linear-gradient(160deg, #e5eaf0, var(--plum));
+    box-shadow: 0 3px 3px rgba(0,0,0,0.15);
+  }
+  .latest-cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .latest-text { min-width: 0; }
+  .latest-label { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+  .latest-title {
+    font-family: var(--serif); font-size: 0.85rem; line-height: 1.5; margin-bottom: 6px;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .latest-date { font-size: 0.82rem; color: var(--ink-soft); }
+
+  .topic-list { display: flex; flex-direction: column; }
+  .topic-link {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; text-align: left; margin-left: -8px; padding: 6px 0 6px 8px;
+    border: 0; border-left: 2px solid transparent; background: none; cursor: pointer;
+    font: inherit; font-size: 0.92rem; color: var(--ink);
+  }
+  .topic-link:hover { color: var(--highlight); border-left-color: var(--highlight); }
+  .topic-link.is-active { color: var(--highlight); font-weight: 700; border-left-color: var(--highlight); }
+  .topic-count { font-size: 0.8rem; font-weight: 600; color: var(--ink-soft); }
+
+  /* ---------- Center column: publication list ---------- */
+  .list-head {
+    display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    padding-bottom: 14px; border-bottom: 1px solid var(--rule); scroll-margin-top: 16px;
+  }
+  .list-head .col-heading { margin-bottom: 2px; }
+  .result-count { font-size: 0.85rem; color: var(--ink-soft); }
+  .sort-group { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--chip-border); border-radius: 999px; }
+  .sort-btn {
+    border: 0; background: none; cursor: pointer; padding: 5px 13px; border-radius: 999px;
+    font: inherit; font-size: 0.82rem; font-weight: 600; color: var(--ink-soft);
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .sort-btn:hover { color: var(--ink); }
+  .sort-btn[aria-pressed="true"] { background: var(--plum); color: #fff; }
+  body.dark-mode .sort-btn[aria-pressed="true"] { background: #30363d; }
+
+  .active-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .active-filters:empty { display: none; }
+  .filter-chip {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 5px 4px 13px;
+    background: var(--bg-surface); border: 1px solid var(--chip-border); border-radius: 999px; font-size: 0.82rem;
+  }
+  .filter-chip button {
+    width: 20px; height: 20px; padding: 0; border: 0; border-radius: 50%; cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--panel-blue); color: var(--ink);
+  }
+  .filter-chip button:hover { background: var(--rule); }
+
+  .pub-item { padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .pub-title { font-family: var(--serif); font-weight: 400; font-size: 1.15rem; line-height: 1.45; margin: 0 0 6px; }
+  .pub-title a { color: var(--ink); }
+  .pub-title a:hover { color: var(--highlight); }
+  .pub-authors { font-size: 0.85rem; color: var(--ink-soft); }
+  .pub-cite { font-size: 0.78rem; line-height: 1.6; color: var(--ink-soft); margin: 8px 0 10px; overflow-wrap: anywhere; }
+  .pub-body { display: flex; align-items: flex-start; gap: 16px; }
+  .pub-snippet { flex: 1; min-width: 0; margin: 0; font-size: 0.88rem; line-height: 1.65; color: var(--ink); }
+  .pub-thumb {
+    order: 2; width: 112px; aspect-ratio: 4/3; flex-shrink: 0; object-fit: cover; display: block;
+    border-radius: 10px; border: 1px solid var(--rule);
+    background: linear-gradient(160deg, #e5eaf0, var(--plum));
+  }
+  .pub-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-top: 14px; }
+  .pub-link { font-size: 0.82rem; font-weight: 700; text-decoration: underline; }
+  .pub-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+  .pub-tag {
+    display: inline-block; padding: 3px 12px; font-size: 0.78rem; color: var(--ink);
+    border: 1px solid var(--chip-border); border-radius: 999px;
+    transition: background 0.2s ease;
+  }
+  .pub-tag:hover { background: var(--panel-blue); text-decoration: none; }
+
+  .empty-state { padding: 48px 0; text-align: center; color: var(--ink-soft); }
+  .empty-state p { margin: 0 0 14px; font-family: var(--serif); }
+  .more-wrap { text-align: center; padding-top: 26px; }
+  .pill-btn {
+    display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 20px;
+    border-radius: 19px; border: 1px solid var(--chip-border); background: var(--bg-surface);
+    color: var(--ink); font-family: var(--sans); font-weight: 600; font-size: 0.88rem; cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .pill-btn:hover { background: var(--panel-blue); }
+
+  /* ---------- Right column ---------- */
+  .col-side { display: flex; flex-direction: column; gap: 24px; }
+  .side-box { padding: 20px 20px 18px; background: var(--bg-surface); border: 1px solid var(--rule); border-radius: 22px; }
+  .facts { display: flex; flex-direction: column; gap: 14px; text-align: center; margin-bottom: 16px; }
+  .fact-value { font-weight: 800; font-size: 1.15rem; }
+  .fact-label { font-size: 0.82rem; color: var(--ink-soft); }
+  .side-box-title { font-weight: 700; font-size: 0.95rem; margin: 0 0 8px; }
+  .side-box p { margin: 0 0 10px; font-size: 0.92rem; }
+  .side-link { font-size: 0.88rem; text-decoration: underline; }
+  .facts + .side-link { display: block; text-align: center; }
+
+  /* ---------- Promo cards (right column + card band) ---------- */
+  .promo-card {
+    display: flex; flex-direction: column; overflow: hidden;
+    background: var(--bg-surface); border: 1px solid var(--rule); border-radius: 22px;
+    transition: box-shadow 0.25s ease;
+  }
+  .promo-card:hover { box-shadow: 0 10px 24px rgba(0,0,0,0.08); }
+  .promo-card[id] { scroll-margin-top: 24px; }
+  .promo-card:target { border-color: var(--highlight); box-shadow: 0 0 0 1px var(--highlight); }
+  /* Photo header for the band cards. Each card sets its own background-image inline.
+     Listing two urls is a safety net: if the first file is missing the second shows instead of a black box. */
+  .promo-media {
+    aspect-ratio: 16/10;
+    background-color: var(--plum); background-size: cover; background-position: center;
+  }
+  /* Photo header with the title on top. The overlay is the same rgba(0,0,0,0.7) as the hero,
+     so white text reads the same way it does in the banner. */
+  .promo-photo {
+    position: relative; isolation: isolate; aspect-ratio: 16/10;
+    display: flex; align-items: flex-end; padding: 24px; color: #fff;
+    background-color: var(--plum); background-size: cover; background-position: center;
+    font-family: var(--serif); font-weight: 700; font-size: 1.6rem; line-height: 1.2;
+    text-shadow: 0 2px 16px rgba(0,0,0,0.4);
+  }
+  .promo-photo::before { content: ""; position: absolute; inset: 0; z-index: -1; background: rgba(0,0,0,0.7); }
+  .promo-body { display: flex; flex-direction: column; flex: 1; gap: 6px; padding: 18px 20px 20px; }
+  .promo-title { font-weight: 700; font-size: 1rem; line-height: 1.4; margin: 0; }
+  .promo-text { font-size: 0.9rem; line-height: 1.6; color: var(--ink-soft); margin: 0; }
+  .promo-link { margin-top: auto; padding-top: 8px; font-size: 0.9rem; font-weight: 700; text-decoration: underline; }
+
+  .promo-band {
+    width: min(var(--max-width), calc(100% - 32px)); margin: 0 auto;
+    padding: 36px 32px; background: var(--panel-blue); border-radius: 28px;
+  }
+  .promo-band-inner { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+
+  @media (max-width: 980px) {
+    .pubs-grid { grid-template-columns: 1fr; padding: 26px 20px 44px; gap: 30px; }
+    .col-topics { order: 1; }
+    main { order: 2; }
+    .col-side { order: 3; }
+    /* Topics become a row of chips above the list; the latest-deposit box is dropped
+       because the same publication is already the first item in the list. */
+    .latest-box { display: none; }
+    .topic-list { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .topic-link {
+      width: auto; margin-left: 0; padding: 5px 12px; gap: 8px;
+      border: 1px solid var(--chip-border); border-radius: 999px;
+    }
+    .topic-link:hover { border-color: var(--highlight); }
+    .topic-link.is-active { background: var(--plum); border-color: var(--plum); color: #fff; }
+    body.dark-mode .topic-link.is-active { background: #30363d; border-color: #30363d; }
+    .topic-link.is-active .topic-count { color: rgba(255,255,255,0.75); }
+    .promo-band-inner { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 700px) {
+    .promo-band { padding: 24px 18px; }
+  }
+  @media (max-width: 560px) {
+    .promo-band-inner { grid-template-columns: 1fr; }
+    .pub-thumb { width: 84px; }
+    .pub-tags { margin-left: 0; }
+  }
+  @media (max-width: 480px) {
+    .pubs-grid { padding: 22px 16px 40px; }
+    .sort-group { width: 100%; justify-content: space-between; }
+  }
+
+  /* ---------- Footer ---------- */
+  .site-footer {
+    background: linear-gradient(160deg, var(--plum) 0%, #1f232b 100%);
+    color: #fff;
+    padding: 56px 32px 0;
+    margin-top: 20px;
+    border-radius: 28px 28px 0 0;
+  }
+  .site-footer-inner {
+    max-width: var(--max-width); margin: 0 auto;
+    display: grid; grid-template-columns: 1.4fr repeat(3, 1fr); gap: 40px;
+    padding-bottom: 44px;
+  }
+  .footer-brand-wordmark { font-family: var(--condensed); font-weight: 700; text-transform: uppercase; font-size: 1.6rem; line-height: 1.15; margin-bottom: 14px; }
+  .footer-brand-tagline { font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 260px; }
+  .footer-col-heading { font-family: var(--sans); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.04em; color: rgba(255,255,255,0.5); margin: 0 0 14px; }
+  .site-footer ul { list-style: none; margin: 0; padding: 0; }
+  .site-footer li { padding: 6px 0; font-size: 0.92rem; }
+  .site-footer a { color: rgba(255,255,255,0.88); }
+  .site-footer a:hover { color: #fff; }
+  .site-footer-bottom {
+    max-width: var(--max-width); margin: 0 auto;
+    padding: 20px 0 26px;
+    border-top: 1px solid rgba(255,255,255,0.15);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    font-size: 0.85rem; color: rgba(255,255,255,0.55);
+  }
+  .site-footer-bottom a { color: rgba(255,255,255,0.55); }
+  .site-footer-bottom a:hover { color: #fff; }
+  @media (max-width: 900px) { .site-footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .site-footer-inner { grid-template-columns: 1fr; } }
+
+  /* ---------- Motion preferences + extras for this page ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .latest-box, .promo-card, .sort-btn, .pill-btn, .pub-tag { transition: none; }
+  }
+  body.low-perf .promo-card:hover, body.anims-disabled .promo-card:hover,
+  body.low-perf .latest-box:hover, body.anims-disabled .latest-box:hover { transform: none !important; }
+
+  /* ---------- Search scope dropdown (custom, replaces native select) ---------- */
+  /* The pill no longer clips its children so the list can open below it. */
+  .nav-search { overflow: visible; }
+  .search-scope { position: relative; display: flex; align-self: stretch; flex-shrink: 0; }
+  .nav-search .scope-btn {
+    display: flex; align-items: center; gap: 10px;
+    padding: 13px 16px 13px 20px;
+    border: none; border-right: 1px solid rgba(255,255,255,0.25); border-radius: 999px 0 0 999px;
+    background: transparent; color: rgba(255,255,255,0.95);
+    font-family: var(--sans); font-size: 0.92rem; white-space: nowrap; cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .nav-search .scope-btn:hover { background: rgba(255,255,255,0.08); }
+  .nav-search .scope-btn svg { width: 12px; height: 12px; transition: transform 0.2s ease; }
+  .nav-search .scope-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+  .scope-list {
+    position: absolute; top: calc(100% + 10px); left: 0; z-index: 30;
+    width: max-content; min-width: 100%; margin: 0; padding: 8px; list-style: none;
+    background: rgba(22,24,29,0.94);
+    backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.25); border-radius: 18px;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.35);
+    opacity: 0; visibility: hidden; transform: translateY(-8px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  }
+  .scope-list.open { opacity: 1; visibility: visible; transform: none; }
+  .scope-list li {
+    display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    padding: 10px 14px; border-radius: 12px;
+    color: #fff; font-size: 0.92rem; font-weight: 600; cursor: pointer;
+  }
+  .scope-list li:hover, .scope-list li:focus { background: rgba(255,255,255,0.14); outline: none; }
+  .scope-list li:focus-visible { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.7); }
+  .scope-list li[aria-selected="true"]::after {
+    content: ""; flex-shrink: 0; width: 14px; height: 14px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>") no-repeat center / contain;
+  }
+  @media (max-width: 860px) { .search-scope { display: none; } }
+
+  /* Search input fills the pill; no ring when focused */
+  .nav-search.nav-search-lg .search-input { flex: 1 1 0; width: auto; min-width: 0; max-width: none; }
+  .nav-search input:focus-visible { box-shadow: none; }
+
+  /* Magnifier sits at the right end of the pill */
+  .nav-search .search-submit { padding: 0 22px 0 10px; border-radius: 0 999px 999px 0; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .scope-list, .nav-search .scope-btn, .nav-search .scope-btn svg { transition: none; }
+  }
+
+  /* ---------- Mobile: more room between the nav buttons and the page title ---------- */
+  @media (max-width: 640px) {
+    .journal-hero-topbar { row-gap: 32px; padding-top: 28px; }
+  }
+
+  /* ---------- Low Performance + Animations off ---------- */
+  /* Copied verbatim from the main WildREF page (index.html): Unified Kill Switch for Low Perf and Disabled Animations */
+  body.low-perf *,
+  body.anims-disabled *,
+  body.low-perf *::before,
+  body.anims-disabled *::before,
+  body.low-perf *::after,
+  body.anims-disabled *::after {
+      transition-duration: 0s !important;
+      transition-delay: 0s !important;
+      animation-duration: 0s !important;
+      animation-delay: 0s !important;
+  }
+
+  /* Extras for this page: no hover lift, and keep the download button label visible instead of swapping it for the icon */
+  body.low-perf .menu-btn:hover, body.anims-disabled .menu-btn:hover,
+  body.low-perf .home-btn:hover, body.anims-disabled .home-btn:hover,
+  body.low-perf .cta-button:hover, body.anims-disabled .cta-button:hover,
+  body.low-perf .keyword-chip:hover, body.anims-disabled .keyword-chip:hover,
+  body.low-perf .oa-pill:hover, body.anims-disabled .oa-pill:hover { transform: none !important; }
+  body.low-perf .cta-button:hover .cta-label, body.anims-disabled .cta-button:hover .cta-label { opacity: 1 !important; }
+  body.low-perf .cta-button:hover .cta-icon-wrap, body.anims-disabled .cta-button:hover .cta-icon-wrap { width: 26% !important; }
+
+  /* Low Performance only: every glass (translucent + blurred) surface becomes a solid one.
+     Colors come from the theme tokens, so they follow light and dark mode. */
+  body.low-perf * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none; }
+  body.low-perf .menu-btn, body.low-perf .home-btn, body.low-perf .nav-search, body.low-perf .society-block,
+  body.low-perf .dropdown-menu, body.low-perf .scope-list {
+    background: var(--bg-surface);
+    border-color: var(--rule);
+    color: var(--ink);
+    text-shadow: none;
+  }
+  body.low-perf .menu-btn:hover, body.low-perf .home-btn:hover { background: var(--panel-blue); }
+  body.low-perf .hamburger span { background: currentColor; filter: none; }
+
+  /* Search bar */
+  body.low-perf .nav-search .scope-btn { color: var(--ink); border-right-color: var(--rule); }
+  body.low-perf .nav-search .scope-btn:hover { background: var(--panel-blue); }
+  body.low-perf .nav-search input { color: var(--ink); }
+  body.low-perf .nav-search input::placeholder { color: var(--ink-soft); }
+  body.low-perf .nav-search .search-submit { color: var(--ink-soft); }
+  body.low-perf .nav-search button:focus-visible, body.low-perf .scope-list li:focus-visible { box-shadow: inset 0 0 0 2px var(--link); }
+
+  /* Menus and lists */
+  body.low-perf .dropdown-item-link, body.low-perf .settings-item, body.low-perf .scope-list li { color: var(--ink); }
+  body.low-perf .dropdown-item-link:hover, body.low-perf .scope-list li:hover, body.low-perf .scope-list li:focus { background: var(--panel-blue); }
+  body.low-perf .switch input:not(:checked) + .slider { background: var(--chip-border); }
+  body.low-perf .scope-list li[aria-selected="true"]::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>"); }
+  body.low-perf.dark-mode .scope-list li[aria-selected="true"]::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>"); }
+</style>
+</head>
+<body>
+
+  <!-- HERO BANNER (image + dark overlay) -->
+  <div class="journal-hero">
+    <div class="journal-hero-bg" style="background-image:url('img/IMG_4113.JPG');"></div>
+    <div class="journal-hero-overlay"></div>
+
+    <div class="journal-hero-topbar">
+      <div class="journal-hero-topbar-left">
+        <div class="nav-wrapper">
+          <button class="menu-btn" id="menuToggle">
+            Menu
+            <div class="hamburger"><span></span><span></span></div>
+          </button>
+        </div>
+
+        <a href="publication-repository.html" class="home-btn" id="homeBtn" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+            <polyline points="9 22 9 12 15 12 15 22"></polyline>
+          </svg>
+        </a>
+
+        <div class="settings-wrapper">
+          <button class="home-btn" id="settingsToggle" title="Settings" aria-label="Settings">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Both dropdowns are direct children of journal-hero-topbar-left (position:relative),
+             so they always open from the exact same anchor point regardless of which
+             trigger — Menu or Settings — opened them. -->
+        <div class="dropdown-menu" id="mainDropdown">
+          <a href="publication-repository.html" class="dropdown-item-link">Browse</a>
+          <a href="#collections" class="dropdown-item-link">Collections</a>
+          <a href="#deposit" class="dropdown-item-link">Deposit</a>
+          <a href="#contact" class="dropdown-item-link">Contact</a>
+          <a href="#" class="dropdown-item-link">About</a>
+        </div>
+        <div class="dropdown-menu settings-dropdown" id="settingsDropdown">
+          <div class="settings-item">
+            <span>Dark Mode</span>
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="settings-item">
+            <span>Low Performance</span>
+            <label class="switch">
+              <input type="checkbox" id="lowPerfToggle">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="settings-item">
+            <span>Animations</span>
+            <label class="switch">
+              <input type="checkbox" id="animationToggle" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="journal-hero-topbar-center">
+        <div class="journal-wordmark">WildREF Publication<br>repository</div>
+      </div>
+
+      
+    </div>
+
+    <div class="journal-hero-content">
+      <div class="nav-search nav-search-lg">
+        <div class="search-scope" id="searchScope">
+          <button type="button" class="scope-btn" id="scopeBtn" aria-haspopup="listbox" aria-expanded="false" aria-controls="scopeList" aria-label="Search scope">
+            <span id="scopeLabel">All items</span>
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+          </button>
+          <ul class="scope-list" id="scopeList" role="listbox" aria-label="Search scope">
+            <li role="option" tabindex="-1" data-value="all" aria-selected="true">All items</li>
+            <li role="option" tabindex="-1" data-value="publications" aria-selected="false">Publications</li>
+            <li role="option" tabindex="-1" data-value="supplements" aria-selected="false">Supplemental materials</li>
+          </ul>
+          <input type="hidden" name="scope" id="scopeValue" value="all">
+        </div>
+        <input type="search" class="search-input" placeholder="Search publications" />
+        <button class="search-submit" aria-label="Search">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-head">
+    <h1 class="visually-hidden">WildREF Publication repository</h1>
+  </div>
+
+  <div class="pubs-grid">
+
+    <!-- LEFT COLUMN: latest deposit + browse by topic -->
+    <aside class="col-topics">
+      <!-- Filled from the newest entry in the list by the script at the bottom; this is the no-script fallback -->
+      <a class="latest-box" id="latestBox" href="paper-melissodes-natural-enemies-2026_hogland-reynolds-hogland.html">
+        <div class="latest-cover"><img id="latestImg" src="img/pan-pacific_entomologist.webp" alt=""></div>
+        <div class="latest-text">
+          <div class="latest-label">Latest deposit</div>
+          <div class="latest-title" id="latestTitle">A review of the predators, parasites, and parasitoids of the genus <i>Melissodes</i> Latreille, 1829 (Hymenoptera: Apidae) with biological notes of its natural enemies</div>
+          <div class="latest-date" id="latestDate">Deposited September 2026</div>
+        </div>
+      </a>
+
+      <h2 class="col-heading">Browse by topic</h2>
+      <div class="topic-list" id="topicList"></div>
+    </aside>
+
+    <!-- CENTER COLUMN: publication list -->
+    <main>
+      <div class="list-head" id="listTop">
+        <div>
+          <h2 class="col-heading">Latest publications</h2>
+          <div class="result-count" id="resultCount" role="status" aria-live="polite"></div>
+        </div>
+        <div class="sort-group" role="group" aria-label="Sort publications">
+          <button type="button" class="sort-btn" data-sort="newest" aria-pressed="true">Newest</button>
+          <button type="button" class="sort-btn" data-sort="oldest" aria-pressed="false">Oldest</button>
+          <button type="button" class="sort-btn" data-sort="title" aria-pressed="false">Title A&ndash;Z</button>
+        </div>
+      </div>
+      <div class="active-filters" id="activeFilters"></div>
+
+      <!-- To add a publication: copy one .pub-item, keep newest first if you like (the script sorts anyway) -->
+      <div id="pubList">
+        <!-- REAL ENTRY. data-date (YYYY-MM-DD) drives sorting and the &ldquo;Latest deposit&rdquo; box; data-topics uses | between topics. -->
+        <article class="pub-item" data-date="2026-09-20" data-topics="Entomology|Invertebrates|Zoology and Animal Sciences" data-supplement="true">
+          <h3 class="pub-title"><a href="paper-melissodes-natural-enemies-2026_hogland-reynolds-hogland.html">A review of the predators, parasites, and parasitoids of the genus <i>Melissodes</i> Latreille, 1829 (Hymenoptera: Apidae) with biological notes of its natural enemies</a></h3>
+          <div class="pub-authors">Frank E. Hogland, Melissa J. Reynolds-Hogland</div>
+          <div class="pub-cite"><em>WildREF Publication repository</em>, <span class="pub-date">Deposited September 2026</span>, <a href="#">https://doi.org/10.0000/example.0000</a></div>
+          <div class="pub-body">
+            <p class="pub-snippet">[Abstract snippet: the first two or three sentences of the abstract, ending with an ellipsis &hellip;]</p>
+            <img class="pub-thumb" src="img/pan-pacific_entomologist.webp" alt="" loading="lazy">
+          </div>
+          <div class="pub-foot">
+          <a class="pub-link" href="files/paper-melissodes-natural-enemies-2026_hogland-reynolds-hogland.pdf" download>PDF</a>
+          <a class="pub-link" href="paper-melissodes-natural-enemies-2026_hogland-reynolds-hogland_supplementary.html">Supplementary material</a>
+          <span class="pub-tags"><a class="pub-tag" href="publication-repository.html?topic=Entomology" data-topic="Entomology">Entomology</a><a class="pub-tag" href="publication-repository.html?topic=Invertebrates" data-topic="Invertebrates">Invertebrates</a><a class="pub-tag" href="publication-repository.html?topic=Zoology%20and%20Animal%20Sciences" data-topic="Zoology and Animal Sciences">Zoology and Animal Sciences</a></span>
+          </div>
+        </article>
+      </div>
+
+      <div class="empty-state" id="emptyState" hidden>
+        <p>No publications match your search.</p>
+        <button type="button" class="pill-btn" id="clearAll">Clear filters</button>
+      </div>
+      <div class="more-wrap" id="moreWrap" hidden>
+        <button type="button" class="pill-btn" id="moreBtn">Show more</button>
+      </div>
+    </main>
+
+    <!-- RIGHT COLUMN -->
+    <aside class="col-side">
+      <div class="side-box">
+        <div class="facts">
+          <div><div class="fact-value" id="factPubs">&ndash;</div><div class="fact-label">Publications</div></div>
+          <div><div class="fact-value" id="factTopics">&ndash;</div><div class="fact-label">Topics</div></div>
+          <div><div class="fact-value" id="factSupps">&ndash;</div><div class="fact-label">With supplementary material</div></div>
+        </div>
+        <a class="side-link" href="#">About the repository</a>
+      </div>
+
+      <div class="side-box">
+        <div class="side-box-title">Repository curator</div>
+        <p>[Curator name]</p>
+        <a class="side-link" href="#contact">Contact the repository</a>
+      </div>
+
+      <div class="promo-card">
+        <div class="promo-photo" style="background-image:url('img/IMG_4113.JPG'), url('img/2hero.webp');">Deposit a publication</div>
+        <div class="promo-body">
+          <p class="promo-text">Add your work to the repository and make it freely available to everyone.</p>
+          <a class="promo-link" href="#deposit">Read the deposit guidelines</a>
+        </div>
+      </div>
+
+      <div class="promo-card">
+        <div class="promo-photo" style="background-image:url('img/2hero.webp'); background-position:50% 40%;">Browse the collections</div>
+        <div class="promo-body">
+          <p class="promo-text">Curated groups of publications that share a subject.</p>
+          <a class="promo-link" href="#collections">Explore collections</a>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- CARD BAND (replaces the Oxford promo rows) -->
+  <section class="promo-band" aria-label="More from the repository">
+    <div class="promo-band-inner">
+      <div class="promo-card" id="collections">
+        <div class="promo-media" style="background-image:url('img/2hero.webp'); background-position:50% 42%;" aria-hidden="true"></div>
+        <div class="promo-body">
+          <div class="promo-title">Collections</div>
+          <p class="promo-text">Curated groups of publications that share a subject.</p>
+          <a class="promo-link" href="#collections">Explore collections</a>
+        </div>
+      </div>
+      <div class="promo-card" id="deposit">
+        <div class="promo-media" style="background-image:url('img/IMG_4113.JPG'), url('img/2hero.webp'); background-position:50% 12%;" aria-hidden="true"></div>
+        <div class="promo-body">
+          <div class="promo-title">Deposit a publication</div>
+          <p class="promo-text">Add your work to the repository and make it freely available.</p>
+          <a class="promo-link" href="#deposit">How to deposit</a>
+        </div>
+      </div>
+      <div class="promo-card" id="permissions">
+        <div class="promo-media" style="background-image:url('img/2hero.webp'); background-position:50% 92%;" aria-hidden="true"></div>
+        <div class="promo-body">
+          <div class="promo-title">Rights &amp; permissions</div>
+          <p class="promo-text">Each publication is hosted under the license its authors chose.</p>
+          <a class="promo-link" href="#permissions">Read about permissions</a>
+        </div>
+      </div>
+      <div class="promo-card" id="contact">
+        <div class="promo-media" style="background-image:url('img/IMG_4113.JPG'), url('img/2hero.webp'); background-position:30% 62%;" aria-hidden="true"></div>
+        <div class="promo-body">
+          <div class="promo-title">Contact</div>
+          <p class="promo-text">Questions about a publication or a deposit? Get in touch.</p>
+          <a class="promo-link" href="#contact">Contact the repository</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-wordmark">WildREF Publication<br>repository</div>
+        <p class="footer-brand-tagline">An open repository for wildlife ecology and systematics publications.</p>
+      </div>
+      <div>
+        <div class="footer-col-heading">Repository</div>
+        <ul>
+          <li><a href="#">About the Repository</a></li>
+          <li><a href="publication-repository.html">Browse Publications</a></li>
+          <li><a href="publication-repository.html">Recent Deposits</a></li>
+          <li><a href="#collections">Collections</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-heading">For Authors</div>
+        <ul>
+          <li><a href="#deposit">Deposit a Publication</a></li>
+          <li><a href="#deposit">Deposit Guidelines</a></li>
+          <li><a href="#">Open Access</a></li>
+          <li><a href="#permissions">Rights &amp; Permissions</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-heading">Open Access</div>
+        <ul>
+          <li><a href="#">Open Access Policy</a></li>
+          <li><a href="#">Licensing (CC BY 4.0)</a></li>
+          <li><a href="#">Accessibility</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="site-footer-bottom">
+      <span>Copyright © 2026 WildREF Publication repository. Each publication is hosted under the license chosen by its authors.</span>
+      <span><a href="#">Privacy Policy</a> &nbsp;·&nbsp; <a href="#">Cookie Settings</a> &nbsp;·&nbsp; <a href="#">Legal Notice</a></span>
+    </div>
+  </footer>
+
+  <script>
+    // Light/dark mode toggle — now lives as a switch inside the Settings dropdown
+    // (persisted via the same 'theme' key used across the site)
+    (function () {
+      const darkModeInput = document.getElementById('darkModeToggle');
+      if (!darkModeInput) return;
+
+      if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-mode');
+        darkModeInput.checked = true;
+      }
+
+      darkModeInput.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Glass menu + settings dropdowns (ported from the WildREF homepage nav pattern).
+    // Opening one closes the other, and clicking outside either closes both.
+    (function () {
+      const menuToggle = document.getElementById('menuToggle');
+      const dropdown = document.getElementById('mainDropdown');
+      const settingsToggle = document.getElementById('settingsToggle');
+      const settingsDropdown = document.getElementById('settingsDropdown');
+      if (!menuToggle || !dropdown || !settingsToggle || !settingsDropdown) return;
+
+      menuToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!dropdown.classList.contains('active')) {
+          settingsDropdown.classList.remove('active');
+        }
+        menuToggle.classList.toggle('active');
+        dropdown.classList.toggle('active');
+      });
+
+      settingsToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!settingsDropdown.classList.contains('active')) {
+          menuToggle.classList.remove('active');
+          dropdown.classList.remove('active');
+        }
+        settingsDropdown.classList.toggle('active');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menuToggle.contains(e.target) && !dropdown.contains(e.target)) {
+          menuToggle.classList.remove('active');
+          dropdown.classList.remove('active');
+        }
+        if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target)) {
+          settingsDropdown.classList.remove('active');
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Search scope dropdown: button + listbox with keyboard support
+    (function () {
+      const root = document.getElementById('searchScope');
+      const btn = document.getElementById('scopeBtn');
+      const list = document.getElementById('scopeList');
+      const label = document.getElementById('scopeLabel');
+      const value = document.getElementById('scopeValue');
+      if (!root || !btn || !list) return;
+      const options = Array.from(list.querySelectorAll('[role="option"]'));
+
+      function selectedIndex() {
+        const i = options.findIndex((o) => o.getAttribute('aria-selected') === 'true');
+        return i < 0 ? 0 : i;
+      }
+      function open(focusIndex) {
+        list.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+        options[focusIndex == null ? selectedIndex() : focusIndex].focus();
+      }
+      function close(returnFocus) {
+        list.classList.remove('open');
+        btn.setAttribute('aria-expanded', 'false');
+        if (returnFocus) btn.focus();
+      }
+      function choose(opt) {
+        options.forEach((o) => o.setAttribute('aria-selected', String(o === opt)));
+        label.textContent = opt.textContent;
+        value.value = opt.dataset.value;
+        value.dispatchEvent(new Event('change', { bubbles: true }));
+        close(true);
+      }
+
+      btn.addEventListener('click', () => {
+        if (list.classList.contains('open')) close(false); else open();
+      });
+      btn.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); open(); }
+      });
+
+      options.forEach((opt, i) => {
+        opt.addEventListener('click', () => choose(opt));
+        opt.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowDown') { e.preventDefault(); options[(i + 1) % options.length].focus(); }
+          else if (e.key === 'ArrowUp') { e.preventDefault(); options[(i - 1 + options.length) % options.length].focus(); }
+          else if (e.key === 'Home') { e.preventDefault(); options[0].focus(); }
+          else if (e.key === 'End') { e.preventDefault(); options[options.length - 1].focus(); }
+          else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(opt); }
+          else if (e.key === 'Escape') { e.preventDefault(); close(true); }
+          else if (e.key === 'Tab') { close(false); }
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!root.contains(e.target)) close(false);
+      });
+    })();
+  </script>
+
+  <script>
+    // Low Performance + Animations toggles.
+    // Same logic and localStorage keys as the main WildREF page (index.html), so a visitor's choice carries over.
+    (function () {
+      const lowPerfInput = document.getElementById('lowPerfToggle');
+      const animationToggle = document.getElementById('animationToggle');
+      if (!lowPerfInput || !animationToggle) return;
+
+      // 1. Load saved preferences from localStorage
+      try {
+        if (localStorage.getItem('performance') === 'low') {
+          document.body.classList.add('low-perf');
+          lowPerfInput.checked = true;
+        }
+        if (localStorage.getItem('animations') === 'disabled') {
+          document.body.classList.add('anims-disabled');
+          animationToggle.checked = false;
+        }
+      } catch (err) {}
+
+      // 2. Toggle listeners with saving
+      lowPerfInput.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          document.body.classList.add('low-perf');
+          try { localStorage.setItem('performance', 'low'); } catch (err) {}
+        } else {
+          document.body.classList.remove('low-perf');
+          try { localStorage.setItem('performance', 'high'); } catch (err) {}
+        }
+      });
+
+      animationToggle.addEventListener('change', () => {
+        if (animationToggle.checked) {
+          document.body.classList.remove('anims-disabled');
+          try { localStorage.setItem('animations', 'enabled'); } catch (err) {}
+        } else {
+          document.body.classList.add('anims-disabled');
+          try { localStorage.setItem('animations', 'disabled'); } catch (err) {}
+        }
+      });
+    })();
+  </script>
+  <script>
+    // Publications list: topic filter, hero-bar search, sort and "show more".
+    // Everything runs in the browser from the .pub-item entries in the page; nothing is fetched.
+    (function () {
+      const PAGE_SIZE = 10;
+      const list = document.getElementById('pubList');
+      if (!list) return;
+      const $ = (id) => document.getElementById(id);
+      const items = Array.from(list.querySelectorAll('.pub-item'));
+      const searchInput = document.querySelector('.search-input');
+      const scopeValue = $('scopeValue');
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const state = { topic: '', q: '', scope: 'all', sort: 'newest', limit: PAGE_SIZE };
+
+      // What each entry exposes to search, sort and the topic filter
+      const info = new Map(items.map((it) => [it, {
+        title: it.querySelector('.pub-title').textContent.trim(),
+        date: it.dataset.date || '',
+        topics: (it.dataset.topics || '').split('|').map((s) => s.trim()).filter(Boolean),
+        text: it.textContent.toLowerCase().replace(/\s+/g, ' '),
+        supp: it.dataset.supplement === 'true'
+      }]));
+
+      const topicCounts = new Map();
+      items.forEach((it) => info.get(it).topics.forEach((t) => topicCounts.set(t, (topicCounts.get(t) || 0) + 1)));
+      const topicNames = Array.from(topicCounts.keys()).sort((a, b) => a.localeCompare(b));
+
+      // ---- static facts + latest-deposit box (both computed from the entries) ----
+      $('factPubs').textContent = items.length;
+      $('factTopics').textContent = topicNames.length;
+      $('factSupps').textContent = items.filter((it) => info.get(it).supp).length;
+
+      const newest = items.slice().sort((a, b) => info.get(b).date.localeCompare(info.get(a).date))[0];
+      if (newest) {
+        const link = newest.querySelector('.pub-title a');
+        const thumb = newest.querySelector('img.pub-thumb');
+        const date = newest.querySelector('.pub-date');
+        $('latestBox').setAttribute('href', link.getAttribute('href'));
+        $('latestTitle').innerHTML = link.innerHTML;
+        if (date) $('latestDate').textContent = date.textContent;
+        if (thumb) $('latestImg').setAttribute('src', thumb.getAttribute('src'));
+        else $('latestImg').removeAttribute('src');
+      }
+
+      // ---- topic list ----
+      const topicList = $('topicList');
+      function addTopicButton(name, label, count) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'topic-link';
+        b.dataset.topic = name;
+        const l = document.createElement('span'); l.textContent = label;
+        const c = document.createElement('span'); c.className = 'topic-count'; c.textContent = count;
+        b.append(l, c);
+        b.addEventListener('click', () => { setTopic(name); });
+        topicList.appendChild(b);
+      }
+      addTopicButton('', 'All publications', items.length);
+      topicNames.forEach((t) => addTopicButton(t, t, topicCounts.get(t)));
+
+      // ---- filtering / sorting / rendering ----
+      const comparators = {
+        newest: (a, b) => info.get(b).date.localeCompare(info.get(a).date),
+        oldest: (a, b) => info.get(a).date.localeCompare(info.get(b).date),
+        title: (a, b) => info.get(a).title.localeCompare(info.get(b).title)
+      };
+      function matches(it) {
+        const d = info.get(it);
+        if (state.topic && !d.topics.includes(state.topic)) return false;
+        if (state.q && !d.text.includes(state.q.trim().toLowerCase())) return false;
+        if (state.scope === 'supplements' && !d.supp) return false;
+        return true;
+      }
+      function chip(label, onRemove) {
+        const s = document.createElement('span');
+        s.className = 'filter-chip';
+        s.append(document.createTextNode(label));
+        const x = document.createElement('button');
+        x.type = 'button';
+        x.setAttribute('aria-label', 'Remove filter: ' + label);
+        x.innerHTML = '<svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+        x.addEventListener('click', onRemove);
+        s.appendChild(x);
+        return s;
+      }
+      function render() {
+        const ordered = items.slice().sort(comparators[state.sort]);
+        ordered.forEach((it) => { it.hidden = true; list.appendChild(it); });
+        const found = ordered.filter(matches);
+        const shown = found.slice(0, state.limit);
+        shown.forEach((it) => { it.hidden = false; });
+
+        const n = found.length;
+        $('resultCount').textContent = n === 0 ? 'No publications'
+          : shown.length < n ? 'Showing ' + shown.length + ' of ' + n + ' publications'
+          : n + (n === 1 ? ' publication' : ' publications');
+        $('emptyState').hidden = n > 0;
+        $('moreWrap').hidden = shown.length >= n;
+
+        topicList.querySelectorAll('.topic-link').forEach((b) => {
+          const on = b.dataset.topic === state.topic;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', String(on));
+        });
+        document.querySelectorAll('.sort-btn').forEach((b) => {
+          b.setAttribute('aria-pressed', String(b.dataset.sort === state.sort));
+        });
+
+        const af = $('activeFilters');
+        af.replaceChildren();
+        if (state.topic) af.appendChild(chip('Topic: ' + state.topic, () => setTopic('')));
+        if (state.q.trim()) af.appendChild(chip('Search: ' + state.q.trim(), () => {
+          if (searchInput) searchInput.value = '';
+          state.q = ''; state.limit = PAGE_SIZE; render();
+        }));
+        if (state.scope !== 'all') af.appendChild(chip('Showing: supplemental materials', () => {
+          const all = document.querySelector('#scopeList [data-value="all"]');
+          if (all) all.click();
+        }));
+      }
+      function scrollToList() {
+        $('listTop').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      }
+      function setTopic(t) { state.topic = t; state.limit = PAGE_SIZE; render(); }
+
+      // ---- events ----
+      document.querySelectorAll('.sort-btn').forEach((b) => b.addEventListener('click', () => {
+        state.sort = b.dataset.sort; state.limit = PAGE_SIZE; render();
+      }));
+      list.querySelectorAll('.pub-tag').forEach((a) => a.addEventListener('click', (e) => {
+        e.preventDefault(); setTopic(a.dataset.topic); scrollToList();
+      }));
+      $('moreBtn').addEventListener('click', () => { state.limit += PAGE_SIZE; render(); });
+      $('clearAll').addEventListener('click', () => {
+        state.topic = ''; state.q = ''; state.limit = PAGE_SIZE;
+        if (searchInput) searchInput.value = '';
+        const all = document.querySelector('#scopeList [data-value="all"]');
+        if (all && state.scope !== 'all') all.click(); else render();
+      });
+
+      // The search bar in the hero drives this list
+      if (searchInput) {
+        searchInput.addEventListener('input', () => { state.q = searchInput.value; state.limit = PAGE_SIZE; render(); });
+        searchInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); scrollToList(); } });
+      }
+      const submitBtn = document.querySelector('.search-submit');
+      if (submitBtn) submitBtn.addEventListener('click', scrollToList);
+      if (scopeValue) scopeValue.addEventListener('change', () => { state.scope = scopeValue.value; state.limit = PAGE_SIZE; render(); });
+
+      // Links from other pages: publication-repository.html?topic=Entomology&q=bee
+      const params = new URLSearchParams(window.location.search);
+      state.topic = params.get('topic') || '';
+      state.q = params.get('q') || '';
+      if (searchInput && state.q) searchInput.value = state.q;
+      render();
+    })();
+  </script>
+
+</body>
+</html>
