@@ -261,6 +261,123 @@
   }
   .dropdown-item-link:hover { background: rgba(255,255,255,0.18); text-decoration: none; }
 
+  /* Nested dropdown items (About / Research / Education / Spotlight) — mirrors the
+     WildREF index.html main nav structure (.dropdown-item > .sub-menu > .sub-item). */
+  .dropdown-item {
+    padding: 11px 22px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #111;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    transition: background 0.2s;
+  }
+  .dropdown-item:hover { background: rgba(255,255,255,0.18); }
+  .dropdown-item::after { content: '\203A'; opacity: 0.55; font-weight: 700; }
+  .dropdown-item-2 { text-decoration: none; }
+  .sub-menu { display: none; }
+  .sub-menu-portal {
+    position: fixed;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-bottom-color: rgba(255,255,255,0.25);
+    border-right-color: rgba(255,255,255,0.25);
+    border-radius: 16px;
+    min-width: 190px;
+    padding: 8px 0;
+    box-shadow: var(--glass-shadow);
+    z-index: 30;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s;
+  }
+  .sub-menu-portal.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+  .sub-menu-portal .sub-item a {
+    display: block;
+    padding: 9px 20px;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #111;
+  }
+  .sub-menu-portal .sub-item a:hover { background: rgba(255,255,255,0.18); text-decoration: none; }
+
+  /* Mobile hamburger + drawer — mirrors the WildREF index.html mobile nav
+     (auto-built from #mainDropdown by the script below). */
+  .mob-hamburger {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.60);
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+    border-right-color: rgba(255, 255, 255, 0.25);
+    border-radius: 30px;
+    padding: 8px 16px;
+    font-family: var(--sans);
+    font-weight: 700;
+    color: #000;
+    cursor: pointer;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.22),
+      0 2px 8px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.80),
+      inset 1px 0 0 rgba(255, 255, 255, 0.55);
+  }
+  .mob-icon { display: flex; flex-direction: column; gap: 4px; padding: 4px; }
+  .mob-icon span { display: block; width: 14px; height: 2px; background: #000; transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); }
+  .mob-hamburger.open .mob-icon span:nth-child(1) { transform: translateY(3px) rotate(45deg); }
+  .mob-hamburger.open .mob-icon span:nth-child(2) { transform: translateY(-3px) rotate(-45deg); }
+
+  .mob-nav-drawer {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    right: 0;
+    background: var(--glass-bg-strong);
+    backdrop-filter: blur(22px) saturate(180%);
+    -webkit-backdrop-filter: blur(22px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: var(--glass-shadow);
+    z-index: 25;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  }
+  .mob-nav-drawer.open { max-height: 70vh; opacity: 1; overflow-y: auto; padding: 8px 0; }
+  .mob-nav-item {
+    padding: 12px 22px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  .mob-nav-item:hover { background: rgba(255,255,255,0.18); }
+  .mob-chevron { transition: transform 0.25s ease; opacity: 0.55; }
+  .mob-nav-item.open .mob-chevron { transform: rotate(90deg); }
+  .mob-sub-list { display: none; flex-direction: column; padding-left: 14px; }
+  .mob-sub-list.open { display: flex; }
+  .mob-sub-item a { display: block; padding: 9px 22px; font-weight: 500; font-size: 0.85rem; color: #333; }
+  .mob-sub-item a:hover { background: rgba(255,255,255,0.14); text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .journal-hero-topbar-left .nav-wrapper { display: none; }
+    .mob-hamburger { display: flex; }
+  }
+
   .nav-search {
     display: flex;
     align-items: center;
@@ -898,6 +1015,12 @@
   /* Menus and lists */
   body.low-perf .dropdown-item-link, body.low-perf .settings-item, body.low-perf .scope-list li { color: var(--ink); }
   body.low-perf .dropdown-item-link:hover, body.low-perf .scope-list li:hover, body.low-perf .scope-list li:focus { background: var(--panel-blue); }
+  body.low-perf .dropdown-item, body.low-perf .sub-menu-portal, body.low-perf .mob-hamburger,
+  body.low-perf .mob-nav-drawer, body.low-perf .mob-nav-item { color: var(--ink); background: var(--bg-surface); border-color: var(--rule); }
+  body.low-perf .dropdown-item:hover, body.low-perf .mob-nav-item:hover,
+  body.low-perf .sub-menu-portal .sub-item a:hover, body.low-perf .mob-sub-item a:hover { background: var(--panel-blue); }
+  body.low-perf .sub-menu-portal .sub-item a, body.low-perf .mob-sub-item a { color: var(--ink); }
+  body.low-perf .mob-icon span { background: currentColor; }
   body.low-perf .switch input:not(:checked) + .slider { background: var(--chip-border); }
   body.low-perf .scope-list li[aria-selected="true"]::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23111' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>"); }
   body.low-perf.dark-mode .scope-list li[aria-selected="true"]::after { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'></polyline></svg>"); }
@@ -912,6 +1035,15 @@
 
     <div class="journal-hero-topbar">
       <div class="journal-hero-topbar-left">
+        <div class="mob-hamburger" id="mobToggle" aria-label="Toggle menu">
+            Menu
+            <div class="mob-icon">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="mob-nav-drawer" id="mobDrawer"></div>
+
         <div class="nav-wrapper">
           <button class="menu-btn" id="menuToggle">
             Menu
@@ -937,13 +1069,49 @@
 
         <!-- Both dropdowns are direct children of journal-hero-topbar-left (position:relative),
              so they always open from the exact same anchor point regardless of which
-             trigger — Menu or Settings — opened them. -->
+             trigger — Menu or Settings — opened them.
+             Content below matches the WildREF index.html main nav verbatim (same items,
+             sub-items and link targets, with relative paths adjusted for this page's depth). -->
         <div class="dropdown-menu" id="mainDropdown">
-          <a href="../publication-repository.html" class="dropdown-item-link">Browse</a>
-          <a href="../publication-repository.html#collections" class="dropdown-item-link">Collections</a>
-          <a href="../publication-repository.html#deposit" class="dropdown-item-link">Deposit</a>
-          <a href="../publication-repository.html#contact" class="dropdown-item-link">Contact</a>
-          <a href="#" class="dropdown-item-link">About</a>
+            <div class="dropdown-item">
+                About
+                <div class="sub-menu">
+                    <div class="sub-item"><a href="#">Mission</a></div>
+                    <div class="sub-item"><a href="#">Board</a></div>
+                    <div class="sub-item"><a href="#">Advisors</a></div>
+                    <div class="sub-item"><a href="#">Staff</a></div>
+                    <div class="sub-item"><a href="../../index.html#contact">Contact</a></div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                Research
+                <div class="sub-menu">
+                    <div class="sub-item"><a href="#">Black Bears</a></div>
+                    <div class="sub-item"><a href="#">Bees</a></div>
+                    <div class="sub-item"><a href="#">Marmots</a></div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                Education
+                <div class="sub-menu">
+                    <div class="sub-item"><a href="https://themelissodesproject.wildref.org/">The Melissodes Project</a></div>
+                    <div class="sub-item"><a href="#">Data-rich Curricula</a></div>
+                </div>
+            </div>
+            <div class="dropdown-item">
+                Spotlight
+                <div class="sub-menu">
+                    <div class="sub-item"><a href="#">Illegal Wildlife Trade</a></div>
+                    <div class="sub-item"><a href="#">Hurricane Helene in North Carolina</a></div>
+                    <div class="sub-item"><a href="#">Bats</a></div>
+                    <div class="sub-item"><a href="#">Mussels</a></div>
+                    <div class="sub-item"><a href="#">Researcher of the Month</a></div>
+                </div>
+            </div>
+            <a href="#" class="dropdown-item-2">
+            <div class="dropdown-item-link" style="display: block;">
+              <span>Donate</span>
+            </div></a>
         </div>
         <div class="dropdown-menu settings-dropdown" id="settingsDropdown">
           <div class="settings-item">
@@ -1196,10 +1364,10 @@
 
       <div class="alerts-heading">Quick links</div>
       <div class="alerts-list">
-        <a href="../publication-repository.html">Browse publications</a>
-        <a href="../publication-repository.html#deposit">Deposit guidelines</a>
-        <a href="#permissions">Rights &amp; permissions</a>
-        <a href="../publication-repository.html#contact">Contact the repository</a>
+        <a href="#">Browse publications</a>
+        <a href="#">Deposit guidelines</a>
+        <a href="#">Rights &amp; permissions</a>
+        <a href="#">Contact the repository</a>
       </div>
 
       <div class="more-oa-heading">More from the repository</div>
@@ -1227,18 +1395,18 @@
         <div class="footer-col-heading">Repository</div>
         <ul>
           <li><a href="#">About the Repository</a></li>
-          <li><a href="../publication-repository.html">Browse Publications</a></li>
-          <li><a href="../publication-repository.html">Recent Deposits</a></li>
-          <li><a href="../publication-repository.html#collections">Collections</a></li>
+          <li><a href="#">Browse Publications</a></li>
+          <li><a href="#">Recent Deposits</a></li>
+          <li><a href="#">Collections</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-heading">For Authors</div>
         <ul>
-          <li><a href="../publication-repository.html#deposit">Deposit a Publication</a></li>
-          <li><a href="../publication-repository.html#deposit">Deposit Guidelines</a></li>
+          <li><a href="#">Deposit a Publication</a></li>
+          <li><a href="#">Deposit Guidelines</a></li>
           <li><a href="#">Open Access</a></li>
-          <li><a href="#permissions">Rights &amp; Permissions</a></li>
+          <li><a href="#">Rights &amp; Permissions</a></li>
         </ul>
       </div>
       <div>
@@ -1247,7 +1415,7 @@
           <li><a href="#">Open Access Policy</a></li>
           <li><a href="#">Licensing (CC BY 4.0)</a></li>
           <li><a href="#">Accessibility</a></li>
-          <li><a href="../publication-repository.html#contact">Contact</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -1376,6 +1544,192 @@
         }
         if (!settingsToggle.contains(e.target) && !settingsDropdown.contains(e.target)) {
           settingsDropdown.classList.remove('active');
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    // Sub-menu flyout logic (ported 1:1 from the WildREF index.html "Sub-menu Portal Logic").
+    // Each .dropdown-item's .sub-menu is copied into a fixed-position portal so it can
+    // escape the dropdown's overflow and be positioned next to the hovered/tapped item.
+    (function () {
+      const dropdown = document.getElementById('mainDropdown');
+      if (!dropdown) return;
+
+      const portals = new Map();
+      const hideTimers = new Map();
+      const GAP_DELAY = 130;
+
+      function cancelHide(portal) {
+        if (hideTimers.has(portal)) {
+          clearTimeout(hideTimers.get(portal));
+          hideTimers.delete(portal);
+        }
+      }
+      function scheduleHide(portal) {
+        cancelHide(portal);
+        hideTimers.set(portal, setTimeout(() => {
+          portal.classList.remove('visible');
+          hideTimers.delete(portal);
+        }, GAP_DELAY));
+      }
+      function hideAllPortals() {
+        portals.forEach(p => { cancelHide(p); p.classList.remove('visible'); });
+      }
+
+      let activeMobileItem = null;
+
+      dropdown.querySelectorAll('.dropdown-item, .dropdown-item-2').forEach(item => {
+        const srcMenu = item.querySelector('.sub-menu');
+        if (!srcMenu) return;
+
+        const portal = document.createElement('div');
+        portal.className = 'sub-menu-portal';
+        portal.innerHTML = srcMenu.innerHTML;
+        document.body.appendChild(portal);
+        portals.set(item, portal);
+
+        function positionPortal() {
+          const r = item.getBoundingClientRect();
+          const vw = window.innerWidth;
+          const vh = window.innerHeight;
+          const gap = 10;
+          const pw = portal.offsetWidth || 190;
+          const ph = portal.offsetHeight || 130;
+
+          let left = r.right + gap;
+          if (left + pw > vw - 8) left = Math.max(8, r.left - pw - gap);
+
+          let top = r.top;
+          if (top + ph > vh - 8) top = Math.max(8, vh - ph - 8);
+
+          portal.style.left = left + 'px';
+          portal.style.top = top + 'px';
+        }
+
+        item.addEventListener('mouseenter', () => {
+          cancelHide(portal);
+          portals.forEach((p, it) => { if (it !== item) { cancelHide(p); p.classList.remove('visible'); } });
+          if (!dropdown.classList.contains('active')) return;
+          positionPortal();
+          portal.classList.add('visible');
+        });
+
+        item.addEventListener('mouseleave', e => {
+          if (!portal.contains(e.relatedTarget)) scheduleHide(portal);
+        });
+
+        portal.addEventListener('mouseenter', () => cancelHide(portal));
+        portal.addEventListener('mouseleave', e => {
+          if (!item.contains(e.relatedTarget)) scheduleHide(portal);
+        });
+
+        item.addEventListener('touchend', e => {
+          e.preventDefault();
+          if (!dropdown.classList.contains('active')) return;
+          if (activeMobileItem === item && portal.classList.contains('visible')) {
+            portal.classList.remove('visible');
+            activeMobileItem = null;
+          } else {
+            hideAllPortals();
+            positionPortal();
+            portal.classList.add('visible');
+            activeMobileItem = item;
+          }
+        });
+      });
+
+      dropdown.addEventListener('transitionend', () => {
+        if (!dropdown.classList.contains('active')) hideAllPortals();
+      });
+    })();
+  </script>
+
+  <script>
+    // Mobile hamburger + drawer (ported 1:1 from the WildREF index.html "Mobile & Settings Logic").
+    // The drawer is auto-built from #mainDropdown so it always mirrors the desktop nav content.
+    (function () {
+      const mobToggle = document.getElementById('mobToggle');
+      const mobDrawer = document.getElementById('mobDrawer');
+      const desktopMenu = document.getElementById('mainDropdown');
+      const menuToggle = document.getElementById('menuToggle');
+      const dropdown = document.getElementById('mainDropdown');
+      const settingsToggle = document.getElementById('settingsToggle');
+      const settingsDropdown = document.getElementById('settingsDropdown');
+
+      if (!mobToggle || !mobDrawer || !desktopMenu) return;
+
+      // Auto-build mobile nav from the desktop dropdown
+      desktopMenu.querySelectorAll('.dropdown-item, .dropdown-item-2').forEach((item, idx) => {
+        const subItems = item.querySelectorAll('.sub-item');
+        const subId = 'mob-sub-' + idx;
+        let label = subItems.length > 0 ?
+          Array.from(item.childNodes).filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent.trim()).join('') :
+          item.textContent.trim();
+
+        const navItem = document.createElement('div');
+        navItem.className = 'mob-nav-item';
+
+        if (subItems.length > 0) {
+          navItem.dataset.mobSub = subId;
+          navItem.innerHTML = `${label} <span class="mob-chevron">\u203A</span>`;
+          mobDrawer.appendChild(navItem);
+          const subList = document.createElement('div');
+          subList.className = 'mob-sub-list';
+          subList.id = subId;
+          subItems.forEach(si => {
+            const link = si.querySelector('a');
+            subList.innerHTML += `<div class="mob-sub-item"><a href="${link ? link.getAttribute('href') : '#'}">${link ? link.textContent : si.textContent}</a></div>`;
+          });
+          mobDrawer.appendChild(subList);
+        } else {
+          const href = (item.closest('a') || item.querySelector('a'))?.getAttribute('href') || '#';
+          navItem.innerHTML = `<a href="${href}" style="color: inherit; display: block; width: 100%;">${label}</a>`;
+          mobDrawer.appendChild(navItem);
+        }
+      });
+
+      // Toggle mobile drawer
+      mobToggle.addEventListener('click', () => {
+        if (!mobDrawer.classList.contains('open') && settingsDropdown) settingsDropdown.classList.remove('active');
+        mobDrawer.classList.toggle('open');
+        mobToggle.classList.toggle('open');
+      });
+
+      // Close the drawer if the desktop menu/settings dropdowns open (shouldn't overlap, but stay tidy)
+      if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+          mobDrawer.classList.remove('open');
+          mobToggle.classList.remove('open');
+        });
+      }
+      if (settingsToggle) {
+        settingsToggle.addEventListener('click', () => {
+          mobDrawer.classList.remove('open');
+          mobToggle.classList.remove('open');
+        });
+      }
+
+      // Accordion logic for sub-lists inside the drawer
+      mobDrawer.addEventListener('click', e => {
+        const navItem = e.target.closest('.mob-nav-item[data-mob-sub]');
+        if (!navItem) return;
+        const subId = navItem.dataset.mobSub;
+        const subEl = document.getElementById(subId);
+        const isOpen = navItem.classList.contains('open');
+        mobDrawer.querySelectorAll('.mob-nav-item').forEach(i => i.classList.remove('open'));
+        mobDrawer.querySelectorAll('.mob-sub-list').forEach(s => s.classList.remove('open'));
+        if (!isOpen && subEl) {
+          navItem.classList.add('open');
+          subEl.classList.add('open');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!mobToggle.contains(e.target) && !mobDrawer.contains(e.target)) {
+          mobDrawer.classList.remove('open');
+          mobToggle.classList.remove('open');
         }
       });
     })();
